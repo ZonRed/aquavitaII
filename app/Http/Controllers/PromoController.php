@@ -47,13 +47,14 @@ class PromoController extends Controller
     public function SavePromo(Request $request) 
     {
         $Promo = new Promo;
-        $Promo ->tanggal_mulai_promo=$request->tanggal_mulai_promo;
-        $Promo ->tanggal_akhir_promo=$request->tanggal_akhir_promo;
-        $Promo ->code_promo=$request->code_promo;
-        $Promo ->type_promo=$request->type_promo;
-        $Promo ->info_promo=$request->info_promo;
-        $Promo ->harga_promo=$request->harga_promo;
-        $Promo ->save();
+        $Promo->tanggal_mulai_promo=$request->tanggal_mulai_promo;
+        $Promo->tanggal_akhir_promo=$request->tanggal_akhir_promo;
+        $Promo->code_promo=$request->code_promo;
+        $Promo->type_promo=$request->type_promo;
+        $Promo->info_promo=$request->info_promo;
+        $Promo->harga_promo=$request->harga_promo;
+        $Promo->users_id=auth()->user()->id;
+        $Promo->save();
         return redirect('D_Promo');
     }
 

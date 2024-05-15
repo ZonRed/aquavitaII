@@ -48,13 +48,14 @@ class JualController extends Controller
     {
   
         $Jual = new Jual;
-        $Jual ->tanggal_jual=$request->tanggal_jual;
-        $Jual ->code_jual=$request->code_jual;
-        $Jual ->type_jual=$request->type_jual;
-        $Jual ->harga_jual=$request->harga_jual;
-        $Jual ->stock_jual=$request->stock_jual;
-        $Jual ->jumlah_jual=$request->jumlah_jual;
-        $Jual ->save();
+        $Jual->tanggal_jual=$request->tanggal_jual;
+        $Jual->code_jual=$request->code_jual;
+        $Jual->type_jual=$request->type_jual;
+        $Jual->harga_jual=$request->harga_jual;
+        $Jual->stock_jual=$request->stock_jual;
+        $Jual->jumlah_jual=$request->jumlah_jual;
+        $Jual->users_id=auth()->user()->id;
+        $Jual->save();
         return redirect('D_Jual');
     }
 

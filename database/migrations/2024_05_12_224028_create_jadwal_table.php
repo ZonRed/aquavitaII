@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('hari_jadwal');
             $table->time('buka_jadwal');
             $table->time('tutup_jadwal');
+            $table->unsignedBigInteger('users_id');
+            $table->foreign('users_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

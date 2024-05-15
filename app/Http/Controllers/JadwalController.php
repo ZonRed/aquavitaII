@@ -48,10 +48,11 @@ class JadwalController extends Controller
     {
   
         $Jadwal = new Jadwal;
-        $Jadwal ->hari_jadwal=$request->hari_jadwal;
-        $Jadwal ->buka_jadwal=$request->buka_jadwal;
-        $Jadwal ->tutup_jadwal=$request->tutup_jadwal;
-        $Jadwal ->save();
+        $Jadwal->hari_jadwal=$request->hari_jadwal;
+        $Jadwal->buka_jadwal=$request->buka_jadwal;
+        $Jadwal->tutup_jadwal=$request->tutup_jadwal;
+        $Jadwal->users_id=auth()->user()->id;
+        $Jadwal->save();
         return redirect('D_Jadwal');
     }
 

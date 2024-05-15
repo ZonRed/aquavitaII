@@ -43,10 +43,11 @@ class LaporanController extends Controller
 
         // return redirect('admin.D_Hasil');
         $Laporan = new Laporan;
-        $Laporan ->nama_laporan=$request->nama_laporan;
-        $Laporan ->email_laporan=$request->email_laporan;
-        $Laporan ->pesan_laporan=$request->pesan_laporan;
-        $Laporan ->save();
+        $Laporan->nama_laporan=$request->nama_laporan;
+        $Laporan->email_laporan=$request->email_laporan;
+        $Laporan->pesan_laporan=$request->pesan_laporan;
+        $Laporan->users_id=auth()->user()->id;
+        $Laporan->save();
         return redirect('/');
     }
 

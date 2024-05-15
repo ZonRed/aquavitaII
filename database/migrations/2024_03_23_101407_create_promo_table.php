@@ -20,7 +20,9 @@ return new class extends Migration
             $table->integer('code_promo');
             $table->string('type_promo');
             $table->string('info_promo');
-            $table->integer('harga_promo')->nullable(); 
+            $table->integer('harga_promo')->nullable();
+            $table->unsignedBigInteger('users_id');
+            $table->foreign('users_id')->references('id')->on('users'); 
             $table->timestamps();
         });
     }

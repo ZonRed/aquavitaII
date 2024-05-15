@@ -13,7 +13,8 @@ class Laporan extends Model
     protected $fillable = [
         'nama_laporan',
         'email_laporan',
-        'pesan_laporan'
+        'pesan_laporan',
+        'user_id',
     ];
 
 }

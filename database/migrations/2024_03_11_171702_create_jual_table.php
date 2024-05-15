@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('harga_jual');
             $table->string('stock_jual');
             $table->integer('jumlah_jual')->nullable();
+            $table->unsignedBigInteger('users_id');
+            $table->foreign('users_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

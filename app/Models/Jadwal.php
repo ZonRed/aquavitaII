@@ -13,7 +13,8 @@ class Jadwal extends Model
     protected $fillable = [
         'hari_jadwal',
         'buka_jadwal',
-        'tutup_jadwal'
+        'tutup_jadwal',
+        'user_id',
     ];
 
 }

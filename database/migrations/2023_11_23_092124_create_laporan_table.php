@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('nama_laporan');
             $table->string('email_laporan')->unique();
             $table->string('pesan_laporan');
+            $table->unsignedBigInteger('users_id');
+            $table->foreign('users_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

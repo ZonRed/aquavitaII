@@ -16,7 +16,8 @@ class Promo extends Model
         'code_promo',
         'type_promo',
         'info_promo',
-        'harga_promo'
+        'harga_promo',
+        'user_id',
     ];
 
 }

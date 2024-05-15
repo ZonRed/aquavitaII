@@ -16,7 +16,8 @@ class Jual extends Model
         'type_jual',
         'harga_jual',
         'stock_jual',
-        'jumlah_jual,'
+        'jumlah_jual',
+        'user_id',
     ];
 
 }
