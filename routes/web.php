@@ -123,10 +123,10 @@ Route::post('/update_Promo/{id}', 'App\Http\Controllers\PromoController@update_P
 Route::get('/Promo', 'App\Http\Controllers\PromoController@pengguna_Promo');
 
 //pencarian pengguna jual
-Route::get('/Promo', 'App\Http\Controllers\PromoController@pencarianpenggunaPromo');
+Route::get('/pencarianpenggunapromo', 'App\Http\Controllers\PromoController@pencarianpenggunapromo')->name('pencarianpenggunapromo');
 
 //pencarian admin jual
-Route::get('/D_Promo', 'App\Http\Controllers\PromoController@pencarianadminPromo')->middleware('auth');
+Route::get('/pencarianadminpromo', 'App\Http\Controllers\PromoController@pencarianadminpromo')->name('pencarianadminpromo')->middleware('auth');
 
 // //route jadwal
 // Route::get('/D_Jadwal', 'App\Http\Controllers\JadwalController@Jadwal');

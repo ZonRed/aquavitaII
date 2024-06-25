@@ -13,28 +13,29 @@ class PromoController extends Controller
 {
     public function Promo()
     {
-        return view('admin.D_Promo',['Promo'=>$Promo]);
-    }
-    public function pengguna_Promo()
-    {
-        $Promo = Promo::paginate(10); // Paginate with 5 items per page
-        return view('pengguna.Promo',['Promo'=>$Promo]);
-    }
-
-    public function pencarianpenggunapromo(Request $request)
-    {
-        $cari = $request->caricodepengguna_promo;
-        $Promo = Promo::where('code_promo', 'like', '%' . $cari . '%')->paginate(5);
-        $Promo->appends($request->all());
-        return view('pengguna.Promo', ['Key' => '' ,'Promo' => $Promo]);
+         // Fetch jadwal data from the database
+         $Promo = Promo::paginate(5); // Paginate with 5 items per page
+         return view('admin.D_Promo', ['Promo' => $Promo]);
     }
 
     public function pencarianadminpromo(Request $request)
     {
-        $cari = $request->caricodeadmin_promo;
-        $Promo = Promo::where('code_promo', 'like', '%' . $cari . '%')->paginate(5);
-        $Promo->appends($request->all());
-        return view('admin.D_Promo', ['Key' => '' ,'Promo' => $Promo]);
+        $query = $request->input('caricodepromoadmin_promo');
+        $Promo = Promo::where('code_promo', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($Promo); // Return paginated results as JSON for AJAX handling
+    }
+
+    public function pengguna_Promo()
+    {
+        $Promo = Promo::paginate(5); // Paginate with 5 items per page
+        return view('pengguna.Promo', ['Promo' => $Promo]);
+    }
+
+    public function pencarianpenggunapromo(Request $request)
+    {
+        $query = $request->input('caricodepromopengguna_promo');
+        $Promo = Promo::where('code_promo', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($Promo);
     }
 
 

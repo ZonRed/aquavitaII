@@ -57,13 +57,10 @@
                                 <p class="text-danger">begitu juga ketika refresh tekan tombol "cari"!</p>
                                 <div class="card">
                                     <!-- fitur pencarian -->
-                                    <form action="{{ url('/Promo') }}" method="GET" id="searchForm">
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Search Code Promo.."
-                                                id="searchInput" name="caricodepengguna_promo">
-                                            <button class="btn btn-outline-primary" type="submit">Cari</button>
-                                        </div>
-                                    </form>
+                                    <div class="input-group mb-3">
+                                        <input type="text" id="searchInput" class="form-control mb-3"
+                                            placeholder="Search...">
+                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
                                             <thead>
@@ -78,17 +75,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="myTable">
-                                                @foreach ($Promo as $p)
-                                                    <tr>
-                                                        <td>{{ ($loop->index + 1) + (($Promo->currentPage() - 1) * $Promo->perPage()) }}</td>
-                                                        <td>{{ $p->tanggal_mulai_promo }}</td>
-                                                        <td>{{ $p->tanggal_akhir_promo }}</td>
-                                                        <td>{{ $p->code_promo }}</td>
-                                                        <td>{{ $p->type_promo }}</td>
-                                                        <td>{{ $p->info_promo }}</td>
-                                                        <td>Rp.{{ number_format($p->harga_promo, 2, ',', '.') }}</td>
-                                                    <tr>
-                                                @endforeach
+                                                <!-- Data will be inserted here by AJAX -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -97,44 +84,8 @@
                             <!-- Pagination Links -->
                             <div class="d-flex justify-content-center mt-3">
                                 <nav aria-label="Page navigation">
-                                    <ul class="pagination pagination-sm">
-
-                                        {{-- Previous Page Link --}}
-                                        @if ($Promo->onFirstPage())
-                                            <li class="page-item disabled">
-                                                <span class="page-link">&laquo;</span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $Promo->previousPageUrl() }}"
-                                                    aria-label="Previous">
-                                                    <span aria-hidden="true">&laquo;</span>
-                                                </a>
-                                            </li>
-                                        @endif
-
-                                        {{-- Pagination Elements --}}
-                                        @foreach ($Promo->getUrlRange(1, $Promo->lastPage()) as $page => $url)
-                                            <li class="page-item {{ $page == $Promo->currentPage() ? 'active' : '' }}">
-                                                <a class="page-link"
-                                                    href="{{ $url }}">{{ $page }}</a>
-                                            </li>
-                                        @endforeach
-
-                                        {{-- Next Page Link --}}
-                                        @if ($Promo->hasMorePages())
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $Promo->nextPageUrl() }}"
-                                                    aria-label="Next">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                </a>
-                                            </li>
-                                        @else
-                                            <li class="page-item disabled">
-                                                <span class="page-link">&raquo;</span>
-                                            </li>
-                                        @endif
-
+                                    <ul class="pagination pagination-sm" id="paginationLinks">
+                                        <!-- Pagination will be inserted here by AJAX -->
                                     </ul>
                                 </nav>
                             </div>
@@ -158,59 +109,123 @@
         <p>&copy; 2024 AQUAVITA II</p>
     </footer>
 
-    {{-- <!-- Tambahkan script pencarian -->
-    <script>
-    // Fungsi untuk melakukan pencarian
-    function searchTable() {
-        // Mendapatkan nilai input pencarian
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementsByTagName("table")[0];
-        tr = table.getElementsByTagName("tr");
-
-        // Melakukan filter pada baris tabel
-        for (i = 1; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0]; // Kolom dengan tanggal pertandingan
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    // Mendengarkan perubahan pada input pencarian
-    document.getElementById("searchInput").addEventListener("keyup", searchTable);
-</script> --}}
-
-    {{-- SCRIPT PENCARIAN --}}
-    <script>
-        $(document).ready(function() {
-            $("#searchInput").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function() {
-                    // Mengambil nilai dari kolom "code_barang" pada setiap baris
-                    var code_promo = $(this).find('td:eq(1)').text()
-                .toLowerCase(); // Menggunakan indeks kolom 1, karena indeks dimulai dari 0
-                    // Memeriksa apakah nilai kolom "code_barang" cocok dengan nilai pencarian
-                    $(this).toggle(code_promo.indexOf(value) > -1);
-                });
-            });
-        });
-    </script>
-
-
-    <!-- Tambahkan tautan ke file JavaScript Bootstrap -->
-    {{-- <!-- <link rel="stylesheet" href="{{asset('js/bootstrap.js')}}">
-        <link rel="stylesheet" href="{{asset('js/bootstrap.min.js')}}"> --> --}}
-
     <!-- Tambahkan tautan ke file JavaScript Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+
+    <!-- script ajax table,pagination,dan search -->
+    <script>
+        $(document).ready(function() {
+            let currentPage = 1;
+            let query = '';
+
+            // Function to fetch data via AJAX
+            function fetchPromo(page = 1, query = '') {
+                $.ajax({
+                    url: "{{ route('pencarianpenggunapromo') }}", // Adjust with your Laravel route
+                    method: "GET",
+                    data: {
+                        page: page,
+                        caricodepromopengguna_promo: query // Adjust with your query parameter name
+                    },
+                    success: function(data) {
+                        currentPage = data.current_page;
+                        let tableRows = '';
+
+                        // Populate table rows
+                        data.data.forEach((p, index) => {
+                            tableRows += `
+                        <tr>
+                            <td>${index + 1 + (data.current_page - 1) * data.per_page}</td>
+                            <td>${p.tanggal_mulai_promo}</td>
+                            <td>${p.tanggal_akhir_promo}</td>
+                            <td>${p.code_promo}</td>
+                            <td>${p.type_promo}</td>
+                            <td>${p.info_promo}</td>
+                            <td>Rp.${parseFloat(p.harga_promo).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.').replace(/\.00$/, '')}</td>
+                        </tr>`;
+                        });
+
+                        // Update table body
+                        $('#myTable').html(tableRows);
+
+                        // Pagination Links
+                        let paginationLinks = '';
+
+                        // First Page link
+                        paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
+<a class="page-link" href="#" data-page="1" aria-label="First">
+<span aria-hidden="true">&laquo;&laquo;</span>
+</a>
+</li>`;
+
+                        // Previous Page link
+                        if (data.current_page > 1) {
+                            paginationLinks += `<li class="page-item">
+<a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
+<span aria-hidden="true">&laquo;</span>
+</a>
+</li>`;
+                        } else {
+                            paginationLinks += `<li class="page-item disabled">
+<span class="page-link">&laquo;</span>
+</li>`;
+                        }
+
+                        // Page numbers
+                        for (let i = 1; i <= data.last_page; i++) {
+                            paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
+<a class="page-link" href="#" data-page="${i}">${i}</a>
+</li>`;
+                        }
+
+                        // Next Page link
+                        if (data.current_page < data.last_page) {
+                            paginationLinks += `<li class="page-item">
+<a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
+<span aria-hidden="true">&raquo;</span>
+</a>
+</li>`;
+                        } else {
+                            paginationLinks += `<li class="page-item disabled">
+<span class="page-link">&raquo;</span>
+</li>`;
+                        }
+
+                        // Last Page link
+                        paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
+<a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
+<span aria-hidden="true">&raquo;&raquo;</span>
+</a>
+</li>`;
+
+                        $('#paginationLinks').html(paginationLinks);
+                    }
+                });
+            }
+
+            // Initial fetch
+            fetchPromo(currentPage, query);
+
+            // Handle pagination click
+            $(document).on('click', '#paginationLinks a', function(e) {
+                e.preventDefault();
+                let page = $(this).data('page');
+                fetchPromo(page, query);
+            });
+
+            // Handle search input
+            $('#searchInput').on('input', function() {
+                query = $(this).val();
+                fetchPromo(1, query); // Fetch from the first page when searching
+            });
+
+            // Real-time update every 1 second (you mentioned every 1 second update)
+            setInterval(function() {
+                fetchPromo(currentPage, query);
+            }, 1000);
+        });
     </script>
 
 </body>

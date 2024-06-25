@@ -286,7 +286,7 @@
         }
     </script>
 
-   <!-- script ajax table,pagination,dan search -->
+    <!-- script ajax table,pagination,dan search -->
     <script>
         $(document).ready(function() {
             let currentPage = 1;
@@ -328,31 +328,56 @@
                         // Update table body
                         $('#myTable').html(tableRows);
 
-                        // Update pagination links
+                        // Pagination Links
                         let paginationLinks = '';
 
-                        // Previous Page link
+                        // First Page link
                         paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
-                        <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>`;
+    <a class="page-link" href="#" data-page="1" aria-label="First">
+        <span aria-hidden="true">&laquo;&laquo;</span>
+    </a>
+</li>`;
+
+                        // Previous Page link
+                        if (data.current_page > 1) {
+                            paginationLinks += `<li class="page-item">
+        <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>`;
+                        } else {
+                            paginationLinks += `<li class="page-item disabled">
+        <span class="page-link">&laquo;</span>
+    </li>`;
+                        }
 
                         // Page numbers
                         for (let i = 1; i <= data.last_page; i++) {
                             paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
-                            <a class="page-link" href="#" data-page="${i}">${i}</a>
-                        </li>`;
+        <a class="page-link" href="#" data-page="${i}">${i}</a>
+    </li>`;
                         }
 
                         // Next Page link
-                        paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
-                        <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>`;
+                        if (data.current_page < data.last_page) {
+                            paginationLinks += `<li class="page-item">
+        <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>`;
+                        } else {
+                            paginationLinks += `<li class="page-item disabled">
+        <span class="page-link">&raquo;</span>
+    </li>`;
+                        }
 
-                        // Update pagination links
+                        // Last Page link
+                        paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
+    <a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
+        <span aria-hidden="true">&raquo;&raquo;</span>
+    </a>
+</li>`;
+
                         $('#paginationLinks').html(paginationLinks);
                     }
                 });
