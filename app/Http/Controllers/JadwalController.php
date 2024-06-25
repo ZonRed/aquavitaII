@@ -13,7 +13,9 @@ class JadwalController extends Controller
 {
     public function Jadwal()
     {
-        return view('admin.D_Jadwal',['Jadwal'=>$Jadwal]);
+        // Fetch jadwal data from the database
+        $Jadwal = Jadwal::paginate(5); // Paginate with 5 items per page
+        return view('admin.D_Jadwal', ['Jadwal' => $Jadwal]);
     }
     public function pengguna_Jadwal()
     {
@@ -31,10 +33,9 @@ class JadwalController extends Controller
     
     public function pencarianadminjadwal(Request $request)
     {
-        $cari = $request->carihariadmin_jadwal;
-        $Jadwal = Jadwal::where('hari_jadwal', 'like', '%' . $cari . '%')->paginate(5);
-        $Jadwal->appends($request->all());
-        return view('admin.D_Jadwal', ['Key' => '' ,'Jadwal' => $Jadwal]);
+        $query = $request->input('carihariadmin_jadwal');
+        $Jadwal = Jadwal::where('hari_jadwal', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($Jadwal); // Return paginated results as JSON for AJAX handling
     }
 
 

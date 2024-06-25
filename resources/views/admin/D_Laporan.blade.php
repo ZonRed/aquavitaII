@@ -131,15 +131,16 @@
             <div class="col-md-12">
                 <h5 class="text-danger">Perhatian!!</h5>
                 <p class="text-danger">Cari berdasarkan format yang sudah ada</p>
-                <p class="text-danger">Jika ingin resert click logo kalender (di dalam pencarian), di bagian bawah kiri ada "hapus"</p>
-                <p class="text-danger">click tulisan tersebut untuk hapus data pencarian/menggunakan "backscpace" satu persatu pada format pencarian </p>
+                <p class="text-danger">Jika ingin resert click logo kalender (di dalam pencarian), di bagian bawah kiri
+                    ada "hapus"</p>
+                <p class="text-danger">click tulisan tersebut untuk hapus data pencarian/menggunakan "backscpace" satu
+                    persatu pada format pencarian </p>
             </div>
             <div class="col-md-3">
                 <h3>Pencarian:</h3>
                 <!-- Input untuk Pencarian -->
                 <div class="input-group">
-                    <input  type="date" id="searchInput" class="form-control"
-                        placeholder="format (tgl-bulan-tahun)">
+                    <input type="date" id="searchInput" class="form-control" placeholder="format (tgl-bulan-tahun)">
                 </div>
             </div>
         </div>
@@ -185,6 +186,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 
+    <!-- script ajax delete -->
     <script>
         // Function untuk menampilkan SweetAlert setelah berhasil menghapus data individu
         function showConfirmDeleteModal(id) {
@@ -240,6 +242,7 @@
         });
     </script>
 
+   <!-- script ajax table,pagination,dan search -->
     <script>
         $(document).ready(function() {
             let currentPage = 1;
@@ -265,57 +268,76 @@
                                     year: 'numeric'
                                 });
                             tableRows += `
-                        <tr>
-                            <td>${index + 1 + (data.current_page - 1) * data.per_page}</td>
-                            <td>${laporan.nama_laporan}</td>
-                            <td><a href="https://mail.google.com/mail/?view=cm&fs=1&to=${laporan.email_laporan}" target="_blank">${laporan.email_laporan}</a></td>
-                            <td>${laporan.pesan_laporan}</td>
-                            <td>${formattedDate}</td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-danger" onclick="showConfirmDeleteModal(${laporan.id})">Delete</button>
-                                </div>
-                            </td>
-                        </tr>`;
+                <tr>
+                    <td>${index + 1 + (data.current_page - 1) * data.per_page}</td>
+                    <td>${laporan.nama_laporan}</td>
+                    <td><a href="https://mail.google.com/mail/?view=cm&fs=1&to=${laporan.email_laporan}" target="_blank">${laporan.email_laporan}</a></td>
+                    <td>${laporan.pesan_laporan}</td>
+                    <td>${formattedDate}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-danger" onclick="showConfirmDeleteModal(${laporan.id})">Delete</button>
+                        </div>
+                    </td>
+                </tr>`;
                         });
                         $('#myTable').html(tableRows);
 
                         // Pagination Links
                         let paginationLinks = '';
+
+                        // First Page link
+                        paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
+                <a class="page-link" href="#" data-page="1" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>`;
+
+                        // Previous Page link
                         if (data.current_page > 1) {
                             paginationLinks += `<li class="page-item">
-                        <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>`;
+                    <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>`;
                         } else {
                             paginationLinks += `<li class="page-item disabled">
-                        <span class="page-link">&laquo;</span>
-                    </li>`;
+                    <span class="page-link">&laquo;</span>
+                </li>`;
                         }
 
+                        // Page numbers
                         for (let i = 1; i <= data.last_page; i++) {
                             paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
-                        <a class="page-link" href="#" data-page="${i}">${i}</a>
-                    </li>`;
+                    <a class="page-link" href="#" data-page="${i}">${i}</a>
+                </li>`;
                         }
 
+                        // Next Page link
                         if (data.current_page < data.last_page) {
                             paginationLinks += `<li class="page-item">
-                        <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>`;
+                    <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>`;
                         } else {
                             paginationLinks += `<li class="page-item disabled">
-                        <span class="page-link">&raquo;</span>
-                    </li>`;
+                    <span class="page-link">&raquo;</span>
+                </li>`;
                         }
+
+                        // Last Page link
+                        paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
+                <a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>`;
 
                         $('#paginationLinks').html(paginationLinks);
                     }
                 });
             }
+
 
             // Initial fetch
             pencarianadmin(currentPage, query);

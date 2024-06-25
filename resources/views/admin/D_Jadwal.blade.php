@@ -130,24 +130,20 @@
             <!-- Keterangan -->
             <div class="col-md-12">
                 <h5 class="text-danger">Perhatian!!</h5>
-                <p class="text-danger">Ketika ingin mencari hari harap tekan tombol "cari".</p>
-                <p class="text-danger">Begitu juga ketika refresh tekan tombol "cari"!</p>
+                <p class="text-danger">Cari Berdasarakan nama Hari!.</p>
+                <h3>Pencarian:</h3>
             </div>
             <div class="col-md-3">
                 <div class="input-group">
                     <!-- Fitur pencarian -->
-                    <form action="{{ url('/D_Jadwal') }}" method="GET" id="searchForm">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Search Hari.." id="searchInput"
-                                name="carihariadmin_jadwal">
-                            <button class="btn btn-outline-primary" type="submit">Cari</button>
-                        </div>
-                    </form>
+                    <div class="input-group">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama Hari">
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <!-- Input button -->
-                <a href="D_InputJadwal" class="btn btn-outline-primary">Input</a>
+                <a href="D_InputJadwal" class="btn btn-outline-primary">Input Data Jadwal</a>
             </div>
         </div>
     </div>
@@ -155,79 +151,34 @@
     <!-- Table untuk CRUD hasil jadwal -->
     <div class="table-responsive content-area">
         <div class="d-flex justify-content-between mb-2">
-                <div></div>
-                <div>
-                    <button class="btn btn-danger" onclick="showConfirmDeleteAllModal()">Delete All</button>
-                </div>
+            <div></div>
+            <div>
+                <button class="btn btn-danger" onclick="showConfirmDeleteAllModal()">Delete All</button>
             </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Hari</th>
-                        <th>Jam Buka (WIB)</th>
-                        <th>Jam Tutup (WIB)</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="myTable">
-                    @foreach ($Jadwal as $ja)
-                        <tr>
-                            <td>{{ $loop->index + 1 + ($Jadwal->currentPage() - 1) * $Jadwal->perPage() }}</td>
-                            <td>{{ $ja->hari_jadwal }}</td>
-                            <td>{{ $ja->buka_jadwal }} (WIB)</td>
-                            <td>{{ $ja->tutup_jadwal }} (WIB)</td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <a href="{{ url('/edit_Jadwal/' . $ja->id) }}" class="btn btn-primary">Edit</a>
-                                    <button class="btn btn-danger"
-                                        onclick="showConfirmDeleteModal({{ $ja->id }})">Delete</button>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
         </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Hari</th>
+                    <th>Jam Buka (WIB)</th>
+                    <th>Jam Tutup (WIB)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                <!-- Data will be inserted here by AJAX -->
+            </tbody>
+        </table>
+    </div>
     </div>
 
 
     <!-- Pagination Links -->
     <div class="d-flex justify-content-center mt-3">
         <nav aria-label="Page navigation">
-            <ul class="pagination pagination-sm">
-                {{-- Previous Page Link --}}
-                @if ($Jadwal->onFirstPage())
-                    <li class="page-item disabled">
-                        <span class="page-link">&laquo;</span>
-                    </li>
-                @else
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $Jadwal->previousPageUrl() }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                @endif
-
-                {{-- Pagination Elements --}}
-                @foreach ($Jadwal->getUrlRange(1, $Jadwal->lastPage()) as $page => $url)
-                    <li class="page-item {{ $page == $Jadwal->currentPage() ? 'active' : '' }}">
-                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                    </li>
-                @endforeach
-
-                {{-- Next Page Link --}}
-                @if ($Jadwal->hasMorePages())
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $Jadwal->nextPageUrl() }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                @else
-                    <li class="page-item disabled">
-                        <span class="page-link">&raquo;</span>
-                    </li>
-                @endif
+            <ul class="pagination pagination-sm" id="paginationLinks">
+                <!-- Pagination will be inserted here by AJAX -->
             </ul>
         </nav>
     </div>
@@ -334,6 +285,113 @@
         }
     </script>
 
+   <!-- script ajax table,pagination,dan search -->
+    <script>
+        $(document).ready(function() {
+            let currentPage = 1;
+            let query = '';
+
+            function fetchJadwal(page = 1, query = '') {
+    $.ajax({
+        url: "{{ route('pencarianadminjadwal') }}",
+        method: "GET",
+        data: {
+            page: page,
+            carihariadmin_jadwal: query
+        },
+        success: function(data) {
+            currentPage = data.current_page;
+            let tableRows = '';
+            let jadwal = data.data;
+            jadwal.forEach((item, index) => {
+                tableRows += `
+                <tr>
+                    <td>${index + 1 + (data.current_page - 1) * data.per_page}</td>
+                    <td>${item.hari_jadwal}</td>
+                    <td>${item.buka_jadwal}</td>
+                    <td>${item.tutup_jadwal}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="{{ url('/edit_Jadwal/') }}/${item.id}" class="btn btn-primary">Edit</a>
+                            <button class="btn btn-danger" onclick="showConfirmDeleteModal(${item.id})">Delete</button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+            $('#myTable').html(tableRows);
+
+            // Pagination Links
+            let paginationLinks = '';
+
+            // First Page link
+            paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
+                <a class="page-link" href="#" data-page="1" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>`;
+
+            // Previous Page link
+            if (data.current_page > 1) {
+                paginationLinks += `<li class="page-item">
+                    <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>`;
+            } else {
+                paginationLinks += `<li class="page-item disabled">
+                    <span class="page-link">&laquo;</span>
+                </li>`;
+            }
+
+            // Page numbers
+            for (let i = 1; i <= data.last_page; i++) {
+                paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
+                    <a class="page-link" href="#" data-page="${i}">${i}</a>
+                </li>`;
+            }
+
+            // Next Page link
+            if (data.current_page < data.last_page) {
+                paginationLinks += `<li class="page-item">
+                    <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>`;
+            } else {
+                paginationLinks += `<li class="page-item disabled">
+                    <span class="page-link">&raquo;</span>
+                </li>`;
+            }
+
+            // Last Page link
+            paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
+                <a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>`;
+
+            $('#paginationLinks').html(paginationLinks);
+        }
+    });
+}
+
+            // Initial fetch
+            fetchJadwal(currentPage, query);
+
+            // Handle pagination click
+            $(document).on('click', '#paginationLinks a', function(e) {
+                e.preventDefault();
+                let page = $(this).data('page');
+                fetchJadwal(page, query);
+            });
+
+            // Handle search input
+            $('#searchInput').on('input', function() {
+                query = $(this).val();
+                fetchJadwal(1, query); // Fetch from the first page when searching
+            });
+        });
+    </script>
 </body>
 
 </html>

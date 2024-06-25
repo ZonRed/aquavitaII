@@ -69,7 +69,8 @@ Route::get('/Jadwal', 'App\Http\Controllers\JadwalController@pengguna_Jadwal');
 //pencarian pengguna jadwal
 Route::get('/Jadwal', 'App\Http\Controllers\JadwalController@pencarianpenggunajadwal');
 //pencarian admin jadwal
-Route::get('/D_Jadwal', 'App\Http\Controllers\JadwalController@pencarianadminjadwal')->middleware('auth');
+Route::get('/pencarianadminjadwal', 'App\Http\Controllers\JadwalController@pencarianadminjadwal')->name('pencarianadminjadwal')->middleware('auth');
+
 
 //-----------------
 //route jual
