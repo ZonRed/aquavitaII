@@ -390,6 +390,10 @@
                 query = $(this).val();
                 fetchJadwal(1, query); // Fetch from the first page when searching
             });
+                 // Real-time update every 1 seconds
+                 setInterval(function() {
+                pencarianadminjadwal(currentPage, query);
+            }, 1000);
         });
     </script>
 </body>
