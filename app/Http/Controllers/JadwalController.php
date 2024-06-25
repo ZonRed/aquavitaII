@@ -17,25 +17,25 @@ class JadwalController extends Controller
         $Jadwal = Jadwal::paginate(5); // Paginate with 5 items per page
         return view('admin.D_Jadwal', ['Jadwal' => $Jadwal]);
     }
-    public function pengguna_Jadwal()
-    {
-        $Jadwal = Jadwal::paginate(5); // Paginate with 5 items per page
-        return view('pengguna.Jadwal',['Jadwal'=>$Jadwal]);
-    }
-
-    public function pencarianpenggunajadwal(Request $request)
-    {
-        $cari = $request->cariharipengguna_jadwal;
-        $Jadwal = Jadwal::where('hari_jadwal', 'like', '%' . $cari . '%')->paginate(5);
-        $Jadwal->appends($request->all());
-        return view('pengguna.Jadwal', ['Key' => '' ,'Jadwal' => $Jadwal]);
-    }
-    
     public function pencarianadminjadwal(Request $request)
     {
         $query = $request->input('carihariadmin_jadwal');
         $Jadwal = Jadwal::where('hari_jadwal', 'like', '%' . $query . '%')->paginate(5);
         return response()->json($Jadwal); // Return paginated results as JSON for AJAX handling
+    }
+    
+    public function pengguna_Jadwal()
+    {
+        $Jadwal = Jadwal::paginate(5); // Paginate with 5 items per page
+        return view('pengguna.Jadwal', ['Jadwal' => $Jadwal]);
+    }
+    
+
+    public function pencarianpenggunajadwal(Request $request)
+    {
+        $query = $request->input('cariharipengguna_jadwal');
+        $Jadwal = Jadwal::where('hari_jadwal', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($Jadwal);
     }
 
 

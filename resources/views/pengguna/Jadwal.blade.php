@@ -53,17 +53,13 @@
                             <div class="card-body">
                                 <h1>~Jadwal Operasional AQUAVITA II~</h1>
                                 <h5 class="text-danger">perhatian!!</h5>
-                                <p class="text-danger">ketika ingin mencari Hari harap tekan tombol "cari"</p>
-                                <p class="text-danger">begitu juga ketika refresh tekan tombol "cari"!</p>
+                                <p class="text-danger">Cari Berdasarakan nama Hari!.</p>
                                 <div class="card">
                                     <!-- fitur pencarian -->
-                                    <form action="{{ url('/Jadwal') }}" method="GET" id="searchForm">
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Search Hari.."
-                                                id="searchInput" name="cariharipengguna_jadwal">
-                                            <button class="btn btn-outline-primary" type="submit">Cari</button>
-                                        </div>
-                                    </form>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Search Hari.."
+                                            id="searchInput" name="cariharipengguna_jadwal">
+                                    </div>
 
 
                                     <div class="table-responsive">
@@ -77,14 +73,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="myTable">
-                                                @foreach ($Jadwal as $ja)
-                                                    <tr>
-                                                        <td>{{ ($loop->index + 1) + (($Jadwal->currentPage() - 1) * $Jadwal->perPage()) }}</td>
-                                                        <td>{{ $ja->hari_jadwal }}</td>
-                                                        <td>{{ $ja->buka_jadwal }}</td>
-                                                        <td>{{ $ja->tutup_jadwal }}</td>
-                                                    </tr>
-                                                @endforeach
+                                                <!-- Data will be inserted here by AJAX -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -93,43 +82,8 @@
                             <!-- Pagination Links -->
                             <div class="d-flex justify-content-center mt-3">
                                 <nav aria-label="Page navigation">
-                                    <ul class="pagination pagination-sm">
-
-                                        {{-- Previous Page Link --}}
-                                        @if ($Jadwal->onFirstPage())
-                                            <li class="page-item disabled">
-                                                <span class="page-link">&laquo;</span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $Jadwal->previousPageUrl() }}"
-                                                    aria-label="Previous">
-                                                    <span aria-hidden="true">&laquo;</span>
-                                                </a>
-                                            </li>
-                                        @endif
-
-                                        {{-- Pagination Elements --}}
-                                        @foreach ($Jadwal->getUrlRange(1, $Jadwal->lastPage()) as $page => $url)
-                                            <li class="page-item {{ $page == $Jadwal->currentPage() ? 'active' : '' }}">
-                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                                            </li>
-                                        @endforeach
-
-                                        {{-- Next Page Link --}}
-                                        @if ($Jadwal->hasMorePages())
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $Jadwal->nextPageUrl() }}"
-                                                    aria-label="Next">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                </a>
-                                            </li>
-                                        @else
-                                            <li class="page-item disabled">
-                                                <span class="page-link">&raquo;</span>
-                                            </li>
-                                        @endif
-
+                                    <ul class="pagination pagination-sm" id="paginationLinks">
+                                        <!-- Pagination will be inserted here by AJAX -->
                                     </ul>
                                 </nav>
                             </div>
@@ -153,44 +107,100 @@
         <p>&copy; 2024 AQUAVITA II</p>
     </footer>
 
-    {{-- <!-- Tambahkan script pencarian -->
-    <script>
-    // Fungsi untuk melakukan pencarian
-    function searchTable() {
-        // Mendapatkan nilai input pencarian
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementsByTagName("table")[0];
-        tr = table.getElementsByTagName("tr");
 
-        // Melakukan filter pada baris tabel
-        for (i = 1; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0]; // Kolom dengan tanggal pertandingan
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    // Mendengarkan perubahan pada input pencarian
-    document.getElementById("searchInput").addEventListener("keyup", searchTable);
-</script> --}}
-
-
-    <!-- Tambahkan tautan ke file JavaScript Bootstrap -->
-    {{-- <!-- <link rel="stylesheet" href="{{asset('js/bootstrap.js')}}">
-        <link rel="stylesheet" href="{{asset('js/bootstrap.min.js')}}"> --> --}}
 
     <!-- Tambahkan tautan ke file JavaScript Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
+
+    <script>
+        $(document).ready(function() {
+            let currentPage = 1;
+            let query = '';
+
+            function fetchJadwal(page = 1, query = '') {
+                $.ajax({
+                    url: "{{ route('pencarianpenggunajadwal') }}",
+                    method: "GET",
+                    data: {
+                        page: page,
+                        cariharipengguna_jadwal: query
+                    },
+                    success: function(data) {
+                        currentPage = data.current_page;
+                        let tableRows = '';
+                        let jadwal = data.data;
+                        jadwal.forEach((item, index) => {
+                            tableRows += `
+                            <tr>
+                                <td>${index + 1 + (data.current_page - 1) * data.per_page}</td>
+                                <td>${item.hari_jadwal}</td>
+                                <td>${item.buka_jadwal}</td>
+                                <td>${item.tutup_jadwal}</td>
+                            </tr>`;
+                        });
+                        $('#myTable').html(tableRows);
+
+                        // Pagination Links
+                        let paginationLinks = '';
+
+                        // Previous Page link
+                        if (data.current_page > 1) {
+                            paginationLinks += `<li class="page-item">
+                            <a class="page-link" href="#" data-page="${data.current_page - 1}">&laquo;</a>
+                        </li>`;
+                        } else {
+                            paginationLinks += `<li class="page-item disabled">
+                            <span class="page-link">&laquo;</span>
+                        </li>`;
+                        }
+
+                        // Page numbers
+                        for (let i = 1; i <= data.last_page; i++) {
+                            paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>`;
+                        }
+
+                        // Next Page link
+                        if (data.current_page < data.last_page) {
+                            paginationLinks += `<li class="page-item">
+                            <a class="page-link" href="#" data-page="${data.current_page + 1}">&raquo;</a>
+                        </li>`;
+                        } else {
+                            paginationLinks += `<li class="page-item disabled">
+                            <span class="page-link">&raquo;</span>
+                        </li>`;
+                        }
+
+                        $('#paginationLinks').html(paginationLinks);
+                    }
+                });
+            }
+
+            // Initial fetch
+            fetchJadwal(currentPage, query);
+
+            // Handle pagination click
+            $(document).on('click', '#paginationLinks a', function(e) {
+                e.preventDefault();
+                let page = $(this).data('page');
+                fetchJadwal(page, query);
+            });
+
+            // Handle search input
+            $('#searchInput').on('input', function() {
+                query = $(this).val();
+                fetchJadwal(1, query); // Fetch from the first page when searching
+            });
+                   // Real-time update every 1 seconds
+                   setInterval(function() {
+                fetchJadwal(currentPage, query);
+            }, 1000);
+        });
+    </script>
+
 
 </body>
 
