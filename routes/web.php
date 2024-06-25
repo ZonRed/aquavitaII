@@ -94,9 +94,10 @@ Route::post('/update_Jual/{id}', 'App\Http\Controllers\JualController@update_Jua
 Route::get('/Jual', 'App\Http\Controllers\JualController@pengguna_Jual');
 
 //pencarian pengguna jual
-Route::get('/Jual', 'App\Http\Controllers\JualController@pencarianpenggunajual');
+Route::get('/pencarianpenggunajual', 'App\Http\Controllers\JualController@pencarianpenggunajual')->name('pencarianpenggunajual');
 //pencarian admin jual
-Route::get('/D_Jual', 'App\Http\Controllers\JualController@pencarianadminjual')->middleware('auth');
+Route::get('/pencarianadminjual', 'App\Http\Controllers\JualController@pencarianadminjual')->name('pencarianadminjual')->middleware('auth');
+
 
 
 //-----------------

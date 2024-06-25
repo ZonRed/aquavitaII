@@ -13,28 +13,29 @@ class JualController extends Controller
 {
     public function Jual()
     {
-        return view('admin.D_Jual',['Jual'=>$Jual]);
+            // Fetch jadwal data from the database
+            $Jual = Jual::paginate(5); // Paginate with 5 items per page
+            return view('admin.D_Jual', ['Jual' => $Jual]);
     }
+
+    public function pencarianadminjual(Request $request)
+    {
+        $query = $request->input('caricodejualadmin_jual');
+        $Jual = Jual::where('code_jual', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($Jual); // Return paginated results as JSON for AJAX handling
+    }
+
     public function pengguna_Jual()
     {
         $Jual = Jual::paginate(5); // Paginate with 5 items per page
-        return view('pengguna.Jual',['Jual'=>$Jual]);
+        return view('pengguna.Jual', ['Jual' => $Jual]);
     }
 
     public function pencarianpenggunajual(Request $request)
     {
-        $cari = $request->caricodepengguna_jual;
-        $Jual = Jual::where('code_jual', 'like', '%' . $cari . '%')->paginate(5);
-        $Jual->appends($request->all());
-        return view('pengguna.Jual', ['Key' => '' ,'Jual' => $Jual]);
-    }
-    
-    public function pencarianadminjual(Request $request)
-    {
-        $cari = $request->caricodeadmin_jual;
-        $Jual = Jual::where('code_jual', 'like', '%' . $cari . '%')->paginate(5);
-        $Jual->appends($request->all());
-        return view('admin.D_Jual', ['Key' => '' ,'Jual' => $Jual]);
+        $query = $request->input('caricodejualpengguna_jual');
+        $Jual = Jual::where('code_jual', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($Jual);
     }
 
 

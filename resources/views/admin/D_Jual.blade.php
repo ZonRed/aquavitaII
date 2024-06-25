@@ -136,18 +136,14 @@
             <div class="col-md-3">
                 <div class="input-group">
                     <!-- Fitur pencarian -->
-                    <form action="{{ url('/D_Jual') }}" method="GET" id="searchForm">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Search Code Barang.."
-                                id="searchInput" name="caricodeadmin_jual">
-                            <button class="btn btn-outline-primary" type="submit">Cari</button>
-                        </div>
-                    </form>
+                    <div class="input-group mb-3">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Code Jual">
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <!-- Input button -->
-                <a href="D_InputJual" class="btn btn-outline-primary">Input</a>
+                <a href="D_InputJual" class="btn btn-outline-primary">Input Data Jadwal</a>
             </div>
         </div>
     </div>
@@ -175,24 +171,7 @@
                 </tr>
             </thead>
             <tbody id="myTable">
-                @foreach ($Jual as $j)
-                    <tr>
-                        <td>{{ $loop->index + 1 + ($Jual->currentPage() - 1) * $Jual->perPage() }}</td>
-                        <td>{{ $j->tanggal_jual }}</td>
-                        <td>{{ $j->code_jual }}</td>
-                        <td>{{ $j->type_jual }}</td>
-                        <td>Rp.{{ number_format($j->harga_jual, 2, ',', '.') }}</td>
-                        <td>{{ $j->stock_jual }}</td>
-                        <td>{{ $j->jumlah_jual }}</td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <a href="{{ url('/edit_Jual/' . $j->id) }}" class="btn btn-primary">Edit</a>
-                                <button class="btn btn-danger"
-                                    onclick="showConfirmDeleteModal({{ $j->id }})">Delete</button>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
+                <!-- Data will be inserted here by AJAX -->
             </tbody>
         </table>
     </div>
@@ -200,39 +179,8 @@
     <!-- Pagination Links -->
     <div class="d-flex justify-content-center mt-3">
         <nav aria-label="Page navigation">
-            <ul class="pagination pagination-sm">
-                {{-- Previous Page Link --}}
-                @if ($Jual->onFirstPage())
-                    <li class="page-item disabled">
-                        <span class="page-link">&laquo;</span>
-                    </li>
-                @else
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $Jual->previousPageUrl() }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                @endif
-
-                {{-- Pagination Elements --}}
-                @foreach ($Jual->getUrlRange(1, $Jual->lastPage()) as $page => $url)
-                    <li class="page-item {{ $page == $Jual->currentPage() ? 'active' : '' }}">
-                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                    </li>
-                @endforeach
-
-                {{-- Next Page Link --}}
-                @if ($Jual->hasMorePages())
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $Jual->nextPageUrl() }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                @else
-                    <li class="page-item disabled">
-                        <span class="page-link">&raquo;</span>
-                    </li>
-                @endif
+            <ul class="pagination pagination-sm" id="paginationLinks">
+                <!-- Pagination links will be inserted here by AJAX -->
             </ul>
         </nav>
     </div>
@@ -337,6 +285,102 @@
             Swal.fire('Error', errorMessage, 'error');
         }
     </script>
+
+   <!-- script ajax table,pagination,dan search -->
+    <script>
+        $(document).ready(function() {
+            let currentPage = 1;
+            let query = '';
+
+            // Function to fetch data via AJAX
+            function fetchJual(page = 1, query = '') {
+                $.ajax({
+                    url: "{{ route('pencarianadminjual') }}", // Adjust with your Laravel route
+                    method: "GET",
+                    data: {
+                        page: page,
+                        caricodejualadmin_jual: query // Adjust with your query parameter name
+                    },
+                    success: function(data) {
+                        currentPage = data.current_page;
+                        let tableRows = '';
+
+                        // Populate table rows
+                        data.data.forEach((j, index) => {
+                            tableRows += `
+                            <tr>
+                                <td>${index + 1 + (data.current_page - 1) * data.per_page}</td>
+                                <td>${j.tanggal_jual}</td>
+                                <td>${j.code_jual}</td>
+                                <td>${j.type_jual}</td>
+                                <td>Rp.${parseFloat(j.harga_jual).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.').replace(/\.00$/, '')}</td>
+                                <td>${j.stock_jual}</td>
+                                <td>${j.jumlah_jual}</td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ url('/edit_Jual/') }}/${j.id}" class="btn btn-primary">Edit</a>
+                                        <button class="btn btn-danger" onclick="showConfirmDeleteModal(${j.id})">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>`;
+                        });
+
+                        // Update table body
+                        $('#myTable').html(tableRows);
+
+                        // Update pagination links
+                        let paginationLinks = '';
+
+                        // Previous Page link
+                        paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>`;
+
+                        // Page numbers
+                        for (let i = 1; i <= data.last_page; i++) {
+                            paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>`;
+                        }
+
+                        // Next Page link
+                        paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>`;
+
+                        // Update pagination links
+                        $('#paginationLinks').html(paginationLinks);
+                    }
+                });
+            }
+
+            // Initial fetch
+            fetchJual(currentPage, query);
+
+            // Handle pagination click
+            $(document).on('click', '#paginationLinks a', function(e) {
+                e.preventDefault();
+                let page = $(this).data('page');
+                fetchJual(page, query);
+            });
+
+            // Handle search input
+            $('#searchInput').on('input', function() {
+                query = $(this).val();
+                fetchJual(1, query); // Fetch from the first page when searching
+            });
+
+            // Real-time update every 1 second (you mentioned every 1 second update)
+            setInterval(function() {
+                fetchJual(currentPage, query);
+            }, 1000);
+        });
+    </script>
+
 
 </body>
 
