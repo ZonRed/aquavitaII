@@ -110,24 +110,24 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 <h5 class="text-danger">Perhatian!!</h5>
-                <p class="text-danger">Ketika ingin mencari code promo harap tekan tombol "cari"</p>
-                <p class="text-danger">Begitu juga ketika refresh tekan tombol "cari"!</p>
+                <p class="text-danger">Cari Berdasarakan "Code Promo"!.</p>
+                <h3>Pencarian:</h3>
             </div>
             <div class="col-md-3">
                 <div class="input-group mb-3">
-                    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
+                    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Cari Code Promo...">
                 </div>
             </div>
             <div class="col-md-6">
-                <a href="D_InputPromo" class="btn btn-outline-primary">Input</a>
+                <a href="D_InputPromo" class="btn btn-outline-primary">Input Data Promo</a>
             </div>
         </div>
     </div>
 
     <!-- Table untuk CRUD Promo -->
-    <div class="table-responsive content-area">
-        <div class="d-flex justify-content-between mb-2">
-            <div></div>
+   <div class="table-responsive content-area">
+    <div class="d-flex justify-content-between mb-2 flex-column flex-md-row">
+        <div></div>
             <div>
                 <button class="btn btn-danger" onclick="showConfirmDeleteAllModal()">Delete All</button>
             </div>
@@ -303,50 +303,50 @@
 
                         // First Page link
                         paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
-<a class="page-link" href="#" data-page="1" aria-label="First">
-<span aria-hidden="true">&laquo;&laquo;</span>
-</a>
-</li>`;
+                        <a class="page-link" href="#" data-page="1" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                        </li>`;
 
                         // Previous Page link
                         if (data.current_page > 1) {
                             paginationLinks += `<li class="page-item">
-<a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
-<span aria-hidden="true">&laquo;</span>
-</a>
-</li>`;
+                        <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        </li>`;
                         } else {
                             paginationLinks += `<li class="page-item disabled">
-<span class="page-link">&laquo;</span>
-</li>`;
+                        <span class="page-link">&laquo;</span>
+                        </li>`;
                         }
 
                         // Page numbers
                         for (let i = 1; i <= data.last_page; i++) {
                             paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
-<a class="page-link" href="#" data-page="${i}">${i}</a>
-</li>`;
+                        <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>`;
                         }
 
                         // Next Page link
                         if (data.current_page < data.last_page) {
                             paginationLinks += `<li class="page-item">
-<a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
-<span aria-hidden="true">&raquo;</span>
-</a>
-</li>`;
+                        <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        </li>`;
                         } else {
                             paginationLinks += `<li class="page-item disabled">
-<span class="page-link">&raquo;</span>
-</li>`;
+                        <span class="page-link">&raquo;</span>
+                        </li>`;
                         }
 
                         // Last Page link
                         paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
-<a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
-<span aria-hidden="true">&raquo;&raquo;</span>
-</a>
-</li>`;
+                        <a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                        </li>`;
 
                         $('#paginationLinks').html(paginationLinks);
                     }

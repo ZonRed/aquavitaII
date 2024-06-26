@@ -139,7 +139,7 @@
             <div class="col-md-3">
                 <h3>Pencarian:</h3>
                 <!-- Input untuk Pencarian -->
-                <div class="input-group">
+                <div class="input-group mb-3">
                     <input type="date" id="searchInput" class="form-control" placeholder="format (tgl-bulan-tahun)">
                 </div>
             </div>
@@ -149,7 +149,7 @@
 
     <!-- Table untuk CRUD hasil laporan -->
     <div class="table-responsive content-area">
-        <div class="d-flex justify-content-between mb-2">
+        <div class="d-flex justify-content-between mb-2 flex-column flex-md-row">
             <div></div>
             <div>
                 <button class="btn btn-danger" onclick="showConfirmDeleteAllModal()">Delete All</button>
@@ -268,18 +268,18 @@
                                     year: 'numeric'
                                 });
                             tableRows += `
-                <tr>
-                    <td>${index + 1 + (data.current_page - 1) * data.per_page}</td>
-                    <td>${laporan.nama_laporan}</td>
-                    <td><a href="https://mail.google.com/mail/?view=cm&fs=1&to=${laporan.email_laporan}" target="_blank">${laporan.email_laporan}</a></td>
-                    <td>${laporan.pesan_laporan}</td>
-                    <td>${formattedDate}</td>
-                    <td>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-danger" onclick="showConfirmDeleteModal(${laporan.id})">Delete</button>
-                        </div>
-                    </td>
-                </tr>`;
+                            <tr>
+                                <td>${index + 1 + (data.current_page - 1) * data.per_page}</td>
+                                <td>${laporan.nama_laporan}</td>
+                                <td><a href="https://mail.google.com/mail/?view=cm&fs=1&to=${laporan.email_laporan}" target="_blank">${laporan.email_laporan}</a></td>
+                                <td>${laporan.pesan_laporan}</td>
+                                <td>${formattedDate}</td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-danger" onclick="showConfirmDeleteModal(${laporan.id})">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>`;
                         });
                         $('#myTable').html(tableRows);
 
@@ -287,51 +287,51 @@
                         let paginationLinks = '';
 
                         // First Page link
-                        paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="#" data-page="1" aria-label="First">
-                    <span aria-hidden="true">&laquo;&laquo;</span>
-                </a>
-            </li>`;
+                                    paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
+                            <a class="page-link" href="#" data-page="1" aria-label="First">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>`;
 
                         // Previous Page link
                         if (data.current_page > 1) {
                             paginationLinks += `<li class="page-item">
-                    <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>`;
+                            <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>`;
                         } else {
-                            paginationLinks += `<li class="page-item disabled">
-                    <span class="page-link">&laquo;</span>
-                </li>`;
+                                    paginationLinks += `<li class="page-item disabled">
+                            <span class="page-link">&laquo;</span>
+                        </li>`;
                         }
 
                         // Page numbers
                         for (let i = 1; i <= data.last_page; i++) {
                             paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
-                    <a class="page-link" href="#" data-page="${i}">${i}</a>
-                </li>`;
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>`;
                         }
 
                         // Next Page link
                         if (data.current_page < data.last_page) {
                             paginationLinks += `<li class="page-item">
-                    <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>`;
+                            <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>`;
                         } else {
                             paginationLinks += `<li class="page-item disabled">
-                    <span class="page-link">&raquo;</span>
-                </li>`;
+                            <span class="page-link">&raquo;</span>
+                        </li>`;
                         }
 
                         // Last Page link
                         paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
-                <a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
-                    <span aria-hidden="true">&raquo;&raquo;</span>
-                </a>
-            </li>`;
+                            <a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>`;
 
                         $('#paginationLinks').html(paginationLinks);
                     }

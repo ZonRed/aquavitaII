@@ -52,14 +52,13 @@
                         <div class="container mt-5">
                             <div class="card-body">
                                 <h1>~Produk Penjualan AQUAVITA II~</h1>
-                                <h5 class="text-danger">perhatian!!</h5>
-                                <p class="text-danger">ketika ingin mencari code barang harap tekan tombol "cari"</p>
-                                <p class="text-danger">begitu juga ketika refresh tekan tombol "cari"!</p>
+                                <h5 class="text-danger">Perhatian!!</h5>
+                                <p class="text-danger">Cari Berdasarakan "Nama Barang"!.</p>
                                 <div class="card">
                                     <!-- fitur pencarian -->
                                     <div class="input-group mb-3">
                                         <input type="text" id="searchInput" class="form-control"
-                                            placeholder="Cari Code Jual">
+                                            placeholder="Cari Nama Barang...">
                                     </div>
 
 
@@ -158,50 +157,50 @@
 
                         // First Page link
                         paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
-    <a class="page-link" href="#" data-page="1" aria-label="First">
-        <span aria-hidden="true">&laquo;&laquo;</span>
-    </a>
-</li>`;
+                            <a class="page-link" href="#" data-page="1" aria-label="First">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>`;
 
                         // Previous Page link
                         if (data.current_page > 1) {
                             paginationLinks += `<li class="page-item">
-        <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-        </a>
-    </li>`;
+                            <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>`;
                         } else {
                             paginationLinks += `<li class="page-item disabled">
-        <span class="page-link">&laquo;</span>
-    </li>`;
+                            <span class="page-link">&laquo;</span>
+                        </li>`;
                         }
 
                         // Page numbers
                         for (let i = 1; i <= data.last_page; i++) {
                             paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
-        <a class="page-link" href="#" data-page="${i}">${i}</a>
-    </li>`;
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>`;
                         }
 
                         // Next Page link
                         if (data.current_page < data.last_page) {
                             paginationLinks += `<li class="page-item">
-        <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-        </a>
-    </li>`;
+                            <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>`;
                         } else {
                             paginationLinks += `<li class="page-item disabled">
-        <span class="page-link">&raquo;</span>
-    </li>`;
+                            <span class="page-link">&raquo;</span>
+                        </li>`;
                         }
 
                         // Last Page link
                         paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
-    <a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
-        <span aria-hidden="true">&raquo;&raquo;</span>
-    </a>
-</li>`;
+                        <a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>`;
 
                         $('#paginationLinks').html(paginationLinks);
                     }

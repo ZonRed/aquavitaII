@@ -130,14 +130,14 @@
             <!-- Keterangan -->
             <div class="col-md-12">
                 <h5 class="text-danger">Perhatian!!</h5>
-                <p class="text-danger">Cari Berdasarakan nama Hari!.</p>
+                <p class="text-danger">Cari Berdasarakan "Nama Hari"!.</p>
                 <h3>Pencarian:</h3>
             </div>
             <div class="col-md-3">
                 <div class="input-group">
                     <!-- Fitur pencarian -->
-                    <div class="input-group">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama Hari">
+                    <div class="input-group mb-3">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama Hari...">
                     </div>
                 </div>
             </div>
@@ -150,7 +150,7 @@
 
     <!-- Table untuk CRUD hasil jadwal -->
     <div class="table-responsive content-area">
-        <div class="d-flex justify-content-between mb-2">
+          <div class="d-flex justify-content-between mb-2 flex-column flex-md-row">
             <div></div>
             <div>
                 <button class="btn btn-danger" onclick="showConfirmDeleteAllModal()">Delete All</button>

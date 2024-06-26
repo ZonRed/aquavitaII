@@ -21,7 +21,7 @@ class JualController extends Controller
     public function pencarianadminjual(Request $request)
     {
         $query = $request->input('caricodejualadmin_jual');
-        $Jual = Jual::where('code_jual', 'like', '%' . $query . '%')->paginate(5);
+        $Jual = Jual::where('type_jual', 'like', '%' . $query . '%')->paginate(5);
         return response()->json($Jual); // Return paginated results as JSON for AJAX handling
     }
 
@@ -34,7 +34,7 @@ class JualController extends Controller
     public function pencarianpenggunajual(Request $request)
     {
         $query = $request->input('caricodejualpengguna_jual');
-        $Jual = Jual::where('code_jual', 'like', '%' . $query . '%')->paginate(5);
+        $Jual = Jual::where('type_jual', 'like', '%' . $query . '%')->paginate(5);
         return response()->json($Jual);
     }
 
