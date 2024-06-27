@@ -22,12 +22,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-
-//route Promo
-Route::get('/Promo', function () {
-    return view('pengguna.Promo');
-});
-
 //route Kontak
 Route::get('/Kontak', function () {
     return view('pengguna.Kontak');
@@ -46,9 +40,9 @@ Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
 
 //-----------------
 //route jadwal
-Route::get('/D_Jadwal', 'App\Http\Controllers\JadwalController@Jadwal')->middleware('auth');;
-Route::get('/D_InputJadwal', 'App\Http\Controllers\JadwalController@InputJadwal')->middleware('auth');;
-Route::post('/SaveJadwal', [JadwalController::class, 'SaveJadwal'])->middleware('auth');;
+Route::get('/D_Jadwal', 'App\Http\Controllers\JadwalController@Jadwal')->middleware('auth');
+Route::get('/D_InputJadwal', 'App\Http\Controllers\JadwalController@InputJadwal')->middleware('auth');
+Route::post('/SaveJadwal', [JadwalController::class, 'SaveJadwal'])->middleware('auth');
 
 //route delete jadwal
 Route::get('/delete_Jadwal/{id}', 'App\Http\Controllers\JadwalController@delete_Jadwal')->middleware('auth');
@@ -74,9 +68,9 @@ Route::get('/pencarianadminjadwal', 'App\Http\Controllers\JadwalController@penca
 
 //-----------------
 //route jual
-Route::get('/D_Jual', 'App\Http\Controllers\JualController@Jual')->middleware('auth');;
-Route::get('/D_InputJual', 'App\Http\Controllers\JualController@InputJual')->middleware('auth');;
-Route::post('/SaveJual', [JualController::class, 'SaveJual'])->middleware('auth');;
+Route::get('/D_Jual', 'App\Http\Controllers\JualController@Jual')->middleware('auth');
+Route::get('/D_InputJual', 'App\Http\Controllers\JualController@InputJual')->middleware('auth');
+Route::post('/SaveJual', [JualController::class, 'SaveJual'])->middleware('auth');
 
 //route delete jual
 Route::get('/delete_Jual/{id}', 'App\Http\Controllers\JualController@delete_Jual')->middleware('auth');
@@ -102,9 +96,9 @@ Route::get('/pencarianadminjual', 'App\Http\Controllers\JualController@pencarian
 
 //-----------------
 //route promo
-Route::get('/D_Promo', 'App\Http\Controllers\PromoController@Promo')->middleware('auth');;
-Route::get('/D_InputPromo', 'App\Http\Controllers\PromoController@InputPromo')->middleware('auth');;
-Route::post('/SavePromo', [PromoController::class, 'SavePromo'])->middleware('auth');;
+Route::get('/D_Promo', 'App\Http\Controllers\PromoController@Promo')->middleware('auth');
+Route::get('/D_InputPromo', 'App\Http\Controllers\PromoController@InputPromo')->middleware('auth');
+Route::post('/SavePromo', [PromoController::class, 'SavePromo'])->middleware('auth');
 
 //route delete promo
 Route::get('/delete_Promo/{id}', 'App\Http\Controllers\PromoController@delete_Promo')->middleware('auth');
@@ -170,19 +164,19 @@ Route::get('/', 'App\Http\Controllers\LaporanController@InputLaporan');
 Route::post('/SaveLaporan', [LaporanController::class, 'SaveLaporan']);
 
 //pencarian admin laporan
-Route::get('/pencarianadmin', [LaporanController::class, 'pencarianadmin'])->name('pencarianadmin');
+Route::get('/pencarianadmin', [LaporanController::class, 'pencarianadmin'])->name('pencarianadmin')->middleware('auth');
 
 
 //route delete laporan
 Route::get('/delete_Laporan/{id}', 'App\Http\Controllers\LaporanController@delete_Laporan')->middleware('auth');
 
 //route delete all laporan
-Route::get('/delete_all_Laporan', [LaporanController::class, 'deleteAllLaporan'])->middleware('auth')->name('delete_all_laporan');
+Route::get('/delete_all_Laporan', [LaporanController::class, 'deleteAllLaporan'])->middleware('auth')->name('delete_all_laporan')->middleware('auth');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/Dashboard', function () {
-        return view('admin.Dashboard');
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
     });
 });
 

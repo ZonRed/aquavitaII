@@ -91,7 +91,7 @@
     <div class="sidebar">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="Dashboard">Dashboard</a>
+                <a class="nav-link" href="dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="D_Laporan">View Pesan</a>
@@ -344,9 +344,30 @@
             }
 
             // Page numbers
-            for (let i = 1; i <= data.last_page; i++) {
+            let startPage = Math.max(data.current_page - 2, 1);
+            let endPage = Math.min(data.current_page + 2, data.last_page);
+
+            if (startPage > 1) {
+                paginationLinks += `<li class="page-item">
+                    <a class="page-link" href="#" data-page="1">1</a>
+                </li>`;
+                if (startPage > 2) {
+                    paginationLinks += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
                 paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
                     <a class="page-link" href="#" data-page="${i}">${i}</a>
+                </li>`;
+            }
+
+            if (endPage < data.last_page) {
+                if (endPage < data.last_page - 1) {
+                    paginationLinks += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                }
+                paginationLinks += `<li class="page-item">
+                    <a class="page-link" href="#" data-page="${data.last_page}">${data.last_page}</a>
                 </li>`;
             }
 

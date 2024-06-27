@@ -73,7 +73,7 @@
     <div class="sidebar">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="Dashboard">Dashboard</a>
+                <a class="nav-link" href="dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="D_Laporan">View Pesan</a>
