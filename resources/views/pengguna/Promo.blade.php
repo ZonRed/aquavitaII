@@ -53,9 +53,11 @@
                             <div class="card-body">
                                 <h2>~Promo AQUAVITA II~</h2>
                                 <h5 class="text-danger">Perhatian!!</h5>
-                                <p class="text-danger">Cari Berdasarakan "Code Promo"!.</p>
+                                <p class="text-danger">Promo bisa berganti sesuai selesainya jadwal promo yang sedang berlangsung!</p>
                                 <div class="card">
                                     <!-- fitur pencarian -->
+                                    <h5 class="text-danger">Pencarian:</h5s>
+                                    <p class="text-danger">Cari Berdasarakan "Code Promo"!</p>
                                     <div class="input-group mb-3">
                                         <input type="text" id="searchInput" class="form-control mb-3"
                                             placeholder="Cari Code Promo...">

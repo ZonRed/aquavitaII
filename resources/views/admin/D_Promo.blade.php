@@ -110,7 +110,7 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 <h5 class="text-danger">Perhatian!!</h5>
-                <p class="text-danger">Cari Berdasarakan "Code Promo"!.</p>
+                <p class="text-danger">Cari Berdasarakan "Code Promo"!</p>
                 <h3>Pencarian:</h3>
             </div>
             <div class="col-md-3">

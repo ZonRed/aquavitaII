@@ -53,9 +53,11 @@
                             <div class="card-body">
                                 <h1>~Produk Penjualan AQUAVITA II~</h1>
                                 <h5 class="text-danger">Perhatian!!</h5>
-                                <p class="text-danger">Cari Berdasarakan "Nama Barang"!.</p>
+                                <p class="text-danger">Harga barang dan Stock bisa berganti sewaktu - waktu!</p>
                                 <div class="card">
                                     <!-- fitur pencarian -->
+                                    <h5 class="text-danger">Pencarian:</h5>
+                                    <p class="text-danger">Cari Berdasarakan "Nama Barang"!</p>
                                     <div class="input-group mb-3">
                                         <input type="text" id="searchInput" class="form-control"
                                             placeholder="Cari Nama Barang...">
@@ -148,6 +150,8 @@
                             <td>${j.jumlah_jual}</td>
                         </tr>`;
                         });
+                         // Update table body
+                         $('#myTable').html(tableRows);
 
                        // Pagination Links
                         let paginationLinks = '';

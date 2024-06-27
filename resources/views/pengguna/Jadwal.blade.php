@@ -53,9 +53,11 @@
                             <div class="card-body">
                                 <h1>~Jadwal Operasional AQUAVITA II~</h1>
                                 <h5 class="text-danger">Perhatian!!</h5>
-                                <p class="text-danger">Cari Berdasarakan "Nama Hari"!.</p>
+                                <p class="text-danger">Jadwal bisa berganti tergantung kebijakan toko dan tanggal merah!</p>
                                 <div class="card">
                                     <!-- fitur pencarian -->
+                                    <h5 class="text-danger">Pencarian:</h5>
+                                    <p class="text-danger">Cari Berdasarakan "Nama Hari"!</p>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="Cari Nama Hari..."
                                             id="searchInput" name="cariharipengguna_jadwal">
