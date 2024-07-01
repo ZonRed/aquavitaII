@@ -98,7 +98,7 @@
 
                         if (response.success) {
                             // Login successful, redirect to the Dashboard
-                            window.location.href = '/Dashboard';
+                            window.location.href = '/dashboard';
                         }
                     } else if (xhr.status === 401) {
                         // Invalid email or password, display error message

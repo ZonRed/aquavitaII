@@ -60,7 +60,7 @@
                         <a class="nav-link" href="#lokasi-map">Lokasi Map</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#keluh-kesah">Keluh Kesah</a>
+                        <a class="nav-link" href="#laporan">Laporan</a>
                     </li>
                 </ul>
             </div>
@@ -162,11 +162,11 @@
     </section>
 
     <!-- keluh kesah -->
-    <section id="keluh-kesah" class="py-5">
+    <section id="laporan" class="py-5">
         <div class="container">
             <div class="col text-center">
-                <h3>Keluh Kesah AQUAVITA II</h3>
-                <p>Jika Anda memiliki pertanyaan atau masukan, jangan ragu untuk berkeluh kesah melalui formulir di
+                <h3>Laporan AQUAVITA II</h3>
+                <p>Jika Anda memiliki pertanyaan atau masukan, jangan ragu untuk input laporan melalui formulir di
                     bawah ini.</p>
             </div>
             <!-- Tambahkan formulir kontak di sini jika diperlukan -->
@@ -295,7 +295,7 @@
                 text: successMessage,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.hash = '#keluh-kesah'; // Arahkan ke bagian "Keluh Kesah"
+                    window.location.hash = '#laporan'; // Arahkan ke bagian "Keluh Kesah"
                 }
             });
         }
@@ -307,7 +307,7 @@
                 text: errorMessage,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.hash = '#keluh-kesah'; // Arahkan ke bagian "Keluh Kesah"
+                    window.location.hash = '#laporan'; // Arahkan ke bagian "Keluh Kesah"
                 }
             });
         }
