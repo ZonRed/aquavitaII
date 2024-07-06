@@ -236,8 +236,8 @@
                 document.getElementById("map"),
                 defaultLayers.vector.normal.map, {
                     center: {
-                        lat: -7.3723192539977065,
-                        lng: 112.73006055952578
+                        lat: -7.365414986509003,
+                        lng: 112.7642935736513
                     },
                     zoom: 8, // Adjust the initial zoom level
                     pixelRatio: window.devicePixelRatio || 1,
@@ -250,8 +250,8 @@
             // Function to add markers to the map
             function addMarkersToMap(map) {
                 var fanbasemarker = new H.map.Marker({
-                    lat: -7.3723192539977065,
-                    lng: 112.73006055952578
+                    lat: -7.365628,
+                    lng: 112.764320
                 });
                 map.addObject(fanbasemarker);
             }
@@ -268,8 +268,8 @@
         // Function to open the location in Google Maps
         function openGoogleMaps() {
             const fanbaseLocation = {
-                lat: -7.3723192539977065,
-                lng: 112.73006055952578
+                lat: -7.365628,
+                lng: 112.764320
             };
             const googleMapsUrl =
                 `https://www.google.com/maps/search/?api=1&query=${fanbaseLocation.lat},${fanbaseLocation.lng}`;
