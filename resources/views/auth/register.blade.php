@@ -75,7 +75,8 @@
                             <!-- Elemen untuk menampilkan pesan sukses -->
                             <div id="success-message" style="color: green; text-align: center; margin-top: 5px;"></div>
                             <!-- Bagian pertanyaan sudah punya akun? -->
-                            <small class="text-center mt-3">Sudah punya akun? <a href="login">Login</a>
+                            <small class="text-center mt-3">Sudah punya akun? <a
+                                href="{{ route('login') }}">Login</a>
                                 sekarang</small>
                         </div>
                     </div>
