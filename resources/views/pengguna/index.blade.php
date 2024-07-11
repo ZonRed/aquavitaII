@@ -97,7 +97,7 @@
                         <div class="card-body">
                             <h3 class="card-title">Jadwal Operasional</h3>
                             <p class="card-text">Berisi : Jadwal Operasional Toko Aquavita II</p>
-                            <a href="Jadwal" class="btn btn-primary">Selengkapnya</a>
+                            <a href="jadwal" class="btn btn-primary">Selengkapnya</a>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                         <div class="card-body">
                             <h3 class="card-title">Produk Penjualan</h3>
                             <p class="card-text">Berisi : type, ukuran, harga, dan stock</p>
-                            <a href="Jual" class="btn btn-primary">Selengkapnya</a>
+                            <a href="jual" class="btn btn-primary">Selengkapnya</a>
                         </div>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                         <div class="card-body">
                             <h3 class="card-title">Promo</h3>
                             <p class="card-text">Berisi : Promo Yang sedang berlangsung</p>
-                            <a href="Promo" class="btn btn-primary">Selengkapnya</a>
+                            <a href="promo" class="btn btn-primary">Selengkapnya</a>
                         </div>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
                         <div class="card-body">
                             <h3 class="card-title">Kontak</h3>
                             <p class="card-text">Berisi : nomer WA, untuk pemesanan</p>
-                            <a href="Kontak" class="btn btn-primary">Selengkapnya</a>
+                            <a href="kontak" class="btn btn-primary">Selengkapnya</a>
                         </div>
                     </div>
                 </div>

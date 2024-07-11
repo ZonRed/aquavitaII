@@ -92,7 +92,7 @@
             <!-- Card untuk edit hasil pertandingan -->
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ url('/update_Jual/' . $Jual->id) }}" method="POST">
+                    <form action="{{ url('/update_Jual/' .$jual->id) }}" method="POST">
                         @csrf
                         <!-- Input untuk Tanggal -->
                         <div class="mb-3">
@@ -100,7 +100,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="date" class="form-control" name="tanggal_jual"
-                                value="{{ $Jual->tanggal_jual }}" required>
+                                value="{{ $jual->tanggal_jual }}" required>
                         </div>
 
                         <!-- Input untuk code_barang -->
@@ -110,7 +110,7 @@
                                     lainnya!)</span>
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="number" class="form-control" name="code_jual" value="{{ $Jual->code_jual }}"
+                            <input type="number" class="form-control" name="code_jual" value="{{ $jual->code_jual }}"
                                 required>
                         </div>
 
@@ -121,7 +121,7 @@
                                     lainnya!)</span>
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control" name="type_jual" value="{{ $Jual->type_jual }}"
+                            <input type="text" class="form-control" name="type_jual" value="{{ $jual->type_jual }}"
                                 required>
                         </div>
 
@@ -129,7 +129,7 @@
                         <div class="mb-3">
                             <label for="harga_jual" class="form-label">Harga <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="harga_jual" id="harga_jual"
-                                value="{{ number_format($Jual->harga_jual, 2, ',', '.') }}" required>
+                                value="{{ number_format($jual->harga_jual, 2, ',', '.') }}" required>
                         </div>
 
                         <!-- Input untuk stock -->
@@ -138,8 +138,8 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <select class="form-select" name="stock_jual" required>
-                                <option value="Ada" {{ $Jual->stock_jual == 'Ada' ? 'selected' : '' }}>Ada</option>
-                                <option value="Kosong" {{ $Jual->stock_jual == 'Kosong' ? 'selected' : '' }}>Kosong
+                                <option value="Ada" {{ $jual->stock_jual == 'Ada' ? 'selected' : '' }}>Ada</option>
+                                <option value="Kosong" {{ $jual->stock_jual == 'Kosong' ? 'selected' : '' }}>Kosong
                                 </option>
                             </select>
                         </div>
@@ -151,13 +151,13 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="text" class="form-control" name="jumlah_jual"
-                                value="{{ $Jual->jumlah_jual }}" required>
+                                value="{{ $jual->jumlah_jual }}" required>
                         </div>
 
                         <!-- Tombol Submit -->
                         <input type="submit" value="Update" class="btn btn-primary">
                         <!-- Back button -->
-                        <a href="{{ url('/D_Jual') }}" class="btn btn-outline-primary">Batal</a>
+                        <a href="{{ url('/d_jual') }}" class="btn btn-outline-primary">Batal</a>
                     </form>
                 </div>
             </div>

@@ -143,7 +143,7 @@
                         <!-- Tombol Submit -->
                         <input type="submit" value="Simpan" class="btn btn-primary">
                         <!-- Back button -->
-                        <a href="D_Promo" class="btn btn-outline-primary">View Data</a>
+                        <a href="d_promo" class="btn btn-outline-primary">View Data</a>
                     </form>
                 </div>
             </div>

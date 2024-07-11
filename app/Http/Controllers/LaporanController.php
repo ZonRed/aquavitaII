@@ -14,14 +14,14 @@ class LaporanController extends Controller
     public function Laporan()
     {
         // Ambil data laporan dari database
-        $Laporan = Laporan::paginate(5); // Menggunakan paginate untuk mendukung pagination
-        return view('admin.D_Laporan', ['Laporan' => $Laporan]);
+        $laporan = laporan::paginate(5); // Menggunakan paginate untuk mendukung pagination
+        return view('admin.d_laporan', ['laporan' => $laporan]);
     }
 
     public function pencarianadmin(Request $request)
     {
         $query = $request->input('query');
-        $laporan = Laporan::orderBy('created_at', 'desc');
+        $laporan = laporan::orderBy('created_at', 'desc');
     
         if (!empty($query)) {
             // Mengubah format input menjadi sesuai dengan format di database
@@ -35,8 +35,8 @@ class LaporanController extends Controller
     
     public function InputLaporan()
     {
-        $Laporan = Laporan::all();
-        return view('pengguna.index', compact('Laporan'));
+        $laporan = Laporan::all();
+        return view('pengguna.index', compact('laporan'));
     }
 
     public function SaveLaporan(Request $request)
@@ -51,15 +51,15 @@ class LaporanController extends Controller
         ]);
     
         // Jika tidak ada duplikasi, simpan data
-        $Laporan = new Laporan;
-        $Laporan->nama_laporan = $request->nama_laporan;
-        $Laporan->email_laporan = $request->email_laporan;
-        $Laporan->pesan_laporan = $request->pesan_laporan;
-        $Laporan->users_id = auth()->user()->id;
-        $Laporan->save();
+        $laporan = new Laporan;
+        $laporan->nama_laporan = $request->nama_laporan;
+        $laporan->email_laporan = $request->email_laporan;
+        $laporan->pesan_laporan = $request->pesan_laporan;
+        $laporan->users_id = auth()->user()->id;
+        $laporan->save();
     
         // Redirect dengan SweetAlert
-        if ($Laporan) {
+        if ($laporan) {
             return redirect()->back()->with('success', 'Pesan telah berhasil dikirim!');
         } else {
             return redirect()->back()->with('error', 'Gagal mengirim pesan. Silakan coba lagi.');
@@ -68,22 +68,22 @@ class LaporanController extends Controller
 
     public function delete_Laporan($id)
     {
-        $laporan = Laporan::find($id);
+        $laporan = laporan::find($id);
     
         if (!$laporan) {
-            return redirect('D_Laporan')->with('error', 'Data tidak ditemukan.');
+            return redirect('d_laporan')->with('error', 'Data tidak ditemukan.');
         }
     
         $laporan->delete();
     
-        return redirect('D_Laporan')->with('success', '1 Data berhasil dihapus.');
+        return redirect('d_laporan')->with('success', '1 Data berhasil dihapus.');
     }
     
     public function deleteAllLaporan()
     {
-        Laporan::truncate();
+        laporan::truncate();
     
-        return redirect('/D_Laporan')->with('success', 'Semua data berhasil dihapus.');
+        return redirect('/d_laporan')->with('success', 'Semua data berhasil dihapus.');
     }
     
 }

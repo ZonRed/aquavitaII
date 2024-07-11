@@ -87,7 +87,7 @@
             <!-- Card untuk edit isi promo -->
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ url('/update_Promo/' . $Promo->id) }}" method="POST">
+                    <form action="{{ url('/update_Promo/' . $promo->id) }}" method="POST">
                         @csrf
                         <!-- Input untuk Tanggal mulai promo -->
                         <div class="mb-3">
@@ -95,7 +95,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="date" class="form-control" name="tanggal_mulai_promo"
-                                value="{{ $Promo->tanggal_mulai_promo }}" required>
+                                value="{{ $promo->tanggal_mulai_promo }}" required>
                         </div>
 
                         <!-- Input untuk Tanggal akhir promo -->
@@ -104,7 +104,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="date" class="form-control" name="tanggal_akhir_promo"
-                                value="{{ $Promo->tanggal_akhir_promo }}" required>
+                                value="{{ $promo->tanggal_akhir_promo }}" required>
                         </div>
 
                         <!-- Input untuk code promo -->
@@ -114,7 +114,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="number" class="form-control" name="code_promo"
-                                value="{{ $Promo->code_promo }}" required>
+                                value="{{ $promo->code_promo }}" required>
                         </div>
 
                         <!-- Input untuk type promo-->
@@ -124,7 +124,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="text" class="form-control" name="type_promo"
-                                value="{{ $Promo->type_promo }}" required>
+                                value="{{ $promo->type_promo }}" required>
                         </div>
 
                         <!-- Input untuk info promo-->
@@ -133,7 +133,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="text" class="form-control" name="info_promo"
-                                value="{{ $Promo->info_promo }}" required>
+                                value="{{ $promo->info_promo }}" required>
                         </div>
 
                         <!-- Input untuk harga promo -->
@@ -143,7 +143,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="text" class="form-control" name="harga_promo" id="harga_promo"
-                                value="{{ number_format($Promo->harga_promo, 2, ',', '.') }}" required>
+                                value="{{ number_format($promo->harga_promo, 2, ',', '.') }}" required>
                         </div>
 
 
@@ -151,7 +151,7 @@
                         <!-- Tombol Submit -->
                         <input type="submit" value="Update" class="btn btn-primary">
                         <!-- Back button -->
-                        <a href="{{ url('/D_Promo') }}" class="btn btn-outline-primary">Batal</a>
+                        <a href="{{ url('/d_promo') }}" class="btn btn-outline-primary">Batal</a>
                     </form>
                 </div>
             </div>

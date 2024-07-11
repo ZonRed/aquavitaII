@@ -40,8 +40,8 @@ Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
 
 //-----------------
 //route jadwal
-Route::get('/D_Jadwal', 'App\Http\Controllers\JadwalController@Jadwal')->middleware('auth');
-Route::get('/D_InputJadwal', 'App\Http\Controllers\JadwalController@InputJadwal')->middleware('auth');
+Route::get('/d_jadwal', 'App\Http\Controllers\JadwalController@Jadwal')->middleware('auth');
+Route::get('/d_inputjadwal', 'App\Http\Controllers\JadwalController@InputJadwal')->middleware('auth');
 Route::post('/SaveJadwal', [JadwalController::class, 'SaveJadwal'])->middleware('auth');
 
 //route delete jadwal
@@ -58,7 +58,7 @@ Route::get('/edit_Jadwal/{id}', 'App\Http\Controllers\JadwalController@edit_Jadw
 Route::post('/update_Jadwal/{id}', 'App\Http\Controllers\JadwalController@update_Jadwal')->middleware('auth');
 
 //route pengguna_Jadwal
-Route::get('/Jadwal', 'App\Http\Controllers\JadwalController@pengguna_Jadwal');
+Route::get('/jadwal', 'App\Http\Controllers\JadwalController@pengguna_Jadwal');
 
 //pencarian pengguna jadwal
 Route::get('/pencarianpenggunajadwal', 'App\Http\Controllers\JadwalController@pencarianpenggunajadwal')->name('pencarianpenggunajadwal');
@@ -68,8 +68,8 @@ Route::get('/pencarianadminjadwal', 'App\Http\Controllers\JadwalController@penca
 
 //-----------------
 //route jual
-Route::get('/D_Jual', 'App\Http\Controllers\JualController@Jual')->middleware('auth');
-Route::get('/D_InputJual', 'App\Http\Controllers\JualController@InputJual')->middleware('auth');
+Route::get('/d_jual', 'App\Http\Controllers\JualController@Jual')->middleware('auth');
+Route::get('/d_inputjual', 'App\Http\Controllers\JualController@InputJual')->middleware('auth');
 Route::post('/SaveJual', [JualController::class, 'SaveJual'])->middleware('auth');
 
 //route delete jual
@@ -85,7 +85,7 @@ Route::get('/edit_Jual/{id}', 'App\Http\Controllers\JualController@edit_Jual')->
 Route::post('/update_Jual/{id}', 'App\Http\Controllers\JualController@update_Jual')->middleware('auth');
 
 //route pengguna_Jual
-Route::get('/Jual', 'App\Http\Controllers\JualController@pengguna_Jual');
+Route::get('/jual', 'App\Http\Controllers\JualController@pengguna_Jual');
 
 //pencarian pengguna jual
 Route::get('/pencarianpenggunajual', 'App\Http\Controllers\JualController@pencarianpenggunajual')->name('pencarianpenggunajual');
@@ -96,8 +96,8 @@ Route::get('/pencarianadminjual', 'App\Http\Controllers\JualController@pencarian
 
 //-----------------
 //route promo
-Route::get('/D_Promo', 'App\Http\Controllers\PromoController@Promo')->middleware('auth');
-Route::get('/D_InputPromo', 'App\Http\Controllers\PromoController@InputPromo')->middleware('auth');
+Route::get('/d_promo', 'App\Http\Controllers\PromoController@Promo')->middleware('auth');
+Route::get('/d_inputpromo', 'App\Http\Controllers\PromoController@InputPromo')->middleware('auth');
 Route::post('/SavePromo', [PromoController::class, 'SavePromo'])->middleware('auth');
 
 //route delete promo
@@ -114,7 +114,7 @@ Route::get('/edit_Promo/{id}', 'App\Http\Controllers\PromoController@edit_Promo'
 Route::post('/update_Promo/{id}', 'App\Http\Controllers\PromoController@update_Promo')->middleware('auth');
 
 //route pengguna_Promo
-Route::get('/Promo', 'App\Http\Controllers\PromoController@pengguna_Promo');
+Route::get('/promo', 'App\Http\Controllers\PromoController@pengguna_Promo');
 
 //pencarian pengguna jual
 Route::get('/pencarianpenggunapromo', 'App\Http\Controllers\PromoController@pencarianpenggunapromo')->name('pencarianpenggunapromo');
@@ -159,7 +159,7 @@ Route::get('/pencarianadminpromo', 'App\Http\Controllers\PromoController@pencari
 
 
 //route laporan
-Route::get('/D_Laporan', 'App\Http\Controllers\LaporanController@Laporan')->middleware('auth');
+Route::get('/d_laporan', 'App\Http\Controllers\LaporanController@Laporan')->middleware('auth');
 Route::get('/', 'App\Http\Controllers\LaporanController@InputLaporan');
 Route::post('/SaveLaporan', [LaporanController::class, 'SaveLaporan']);
 

@@ -120,7 +120,7 @@
                         <!-- Tombol Submit -->
                         <input type="submit" value="Simpan" class="btn btn-primary">
                         <!-- Back button -->
-                        <a href="D_Jadwal" class="btn btn-outline-primary">View Data</a>
+                        <a href="d_jadwal" class="btn btn-outline-primary">View Data</a>
                     </form>
                 </div>
             </div>

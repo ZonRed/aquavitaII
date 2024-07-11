@@ -87,7 +87,7 @@
             <!-- Card untuk edit jadwal -->
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ url('/update_Jadwal/' . $Jadwal->id) }}" method="POST">
+                    <form action="{{ url('/update_Jadwal/' . $jadwal->id) }}" method="POST">
                         @csrf
                         <!-- Input untuk Hari -->
                         <div class="mb-3">
@@ -95,19 +95,19 @@
                                 lainnya!)</span>
                                 <span class="text-danger">*</span></label>
                             <select class="form-select" id="hari_jadwal" name="hari_jadwal" required>
-                                <option value="Senin" {{ $Jadwal->hari_jadwal == 'Senin' ? 'selected' : '' }}>Senin
+                                <option value="Senin" {{ $jadwal->hari_jadwal == 'Senin' ? 'selected' : '' }}>Senin
                                 </option>
-                                <option value="Selasa" {{ $Jadwal->hari_jadwal == 'Selasa' ? 'selected' : '' }}>Selasa
+                                <option value="Selasa" {{ $jadwal->hari_jadwal == 'Selasa' ? 'selected' : '' }}>Selasa
                                 </option>
-                                <option value="Rabu" {{ $Jadwal->hari_jadwal == 'Rabu' ? 'selected' : '' }}>Rabu
+                                <option value="Rabu" {{ $jadwal->hari_jadwal == 'Rabu' ? 'selected' : '' }}>Rabu
                                 </option>
-                                <option value="Kamis" {{ $Jadwal->hari_jadwal == 'Kamis' ? 'selected' : '' }}>Kamis
+                                <option value="Kamis" {{ $jadwal->hari_jadwal == 'Kamis' ? 'selected' : '' }}>Kamis
                                 </option>
-                                <option value="Jumat" {{ $Jadwal->hari_jadwal == 'Jumat' ? 'selected' : '' }}>Jumat
+                                <option value="Jumat" {{ $jadwal->hari_jadwal == 'Jumat' ? 'selected' : '' }}>Jumat
                                 </option>
-                                <option value="Sabtu" {{ $Jadwal->hari_jadwal == 'Sabtu' ? 'selected' : '' }}>Sabtu
+                                <option value="Sabtu" {{ $jadwal->hari_jadwal == 'Sabtu' ? 'selected' : '' }}>Sabtu
                                 </option>
-                                <option value="Minggu" {{ $Jadwal->hari_jadwal == 'Minggu' ? 'selected' : '' }}>Minggu
+                                <option value="Minggu" {{ $jadwal->hari_jadwal == 'Minggu' ? 'selected' : '' }}>Minggu
                                 </option>
                             </select>
                         </div>
@@ -119,7 +119,7 @@
                                     class="text-danger">*</span>
                             </label>
                             <input type="time" class="form-control" id="buka_jadwal" name="buka_jadwal"
-                                value="{{ $Jadwal->buka_jadwal }}" required>
+                                value="{{ $jadwal->buka_jadwal }}" required>
                         </div>
 
                         <!-- Input untuk waktu tutup -->
@@ -128,13 +128,13 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="time" class="form-control" id="tutup_jadwal" name="tutup_jadwal"
-                                value="{{ $Jadwal->tutup_jadwal }}" required>
+                                value="{{ $jadwal->tutup_jadwal }}" required>
                         </div>
 
                         <!-- Tombol Submit -->
                         <input type="submit" value="Update" class="btn btn-primary">
                         <!-- Back button -->
-                        <a href="{{ url('/D_Jadwal') }}" class="btn btn-outline-primary">Batal</a>
+                        <a href="{{ url('/d_jadwal') }}" class="btn btn-outline-primary">Batal</a>
                     </form>
                 </div>
             </div>

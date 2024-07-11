@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 
-use App\Models\Promo;
+use App\Models\promo;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -14,41 +14,41 @@ class PromoController extends Controller
     public function Promo()
     {
          // Fetch jadwal data from the database
-         $Promo = Promo::paginate(5); // Paginate with 5 items per page
-         return view('admin.D_Promo', ['Promo' => $Promo]);
+         $promo = promo::paginate(5); // Paginate with 5 items per page
+         return view('admin.d_promo', ['promo' => $promo]);
     }
 
     public function pencarianadminpromo(Request $request)
     {
         $query = $request->input('caricodepromoadmin_promo');
-        $Promo = Promo::where('code_promo', 'like', '%' . $query . '%')->paginate(5);
-        return response()->json($Promo); // Return paginated results as JSON for AJAX handling
+        $promo = promo::where('code_promo', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($promo); // Return paginated results as JSON for AJAX handling
     }
 
     public function pengguna_Promo()
     {
-        $Promo = Promo::paginate(5); // Paginate with 5 items per page
-        return view('pengguna.Promo', ['Promo' => $Promo]);
+        $promo = promo::paginate(5); // Paginate with 5 items per page
+        return view('pengguna.promo', ['promo' => $promo]);
     }
 
     public function pencarianpenggunapromo(Request $request)
     {
         $query = $request->input('caricodepromopengguna_promo');
-        $Promo = Promo::where('code_promo', 'like', '%' . $query . '%')->paginate(5);
-        return response()->json($Promo);
+        $promo = promo::where('code_promo', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($promo);
     }
 
 
     public function InputPromo()
     {
-        $Promo = Promo::all();
-        return view('admin.D_InputPromo',compact('Promo'));
+        $promo = promo::all();
+        return view('admin.d_inputpromo',compact('promo'));
     }
 
     public function SavePromo(Request $request) 
     {
     // Validasi agar tidak terjadi duplikat
-    $existingPromo = Promo::where(function($query) use ($request) {
+    $existingPromo = promo::where(function($query) use ($request) {
                             $query->where('code_promo', $request->code_promo)
                                   ->orWhere('type_promo', $request->type_promo);
                         })
@@ -57,40 +57,40 @@ class PromoController extends Controller
 
     if ($existingPromo) {
         if ($existingPromo->code_promo == $request->code_promo && $existingPromo->type_promo == $request->type_promo) {
-            return redirect('D_InputPromo')->with('error', 'Code dan Type Promo terjadi duplikat!');
+            return redirect('d_inputpromo')->with('error', 'Code dan Type Promo terjadi duplikat!');
         } elseif ($existingPromo->code_promo == $request->code_promo) {
-            return redirect('D_InputPromo')->with('error', 'Code Promo terjadi duplikat!');
+            return redirect('d_inputpromo')->with('error', 'Code Promo terjadi duplikat!');
         } else {
-            return redirect('D_InputPromo')->with('error', 'Barang Promo terjadi duplikat!');
+            return redirect('d_inputpromo')->with('error', 'Barang Promo terjadi duplikat!');
         }
     }
 
-        $Promo = new Promo;
-        $Promo->tanggal_mulai_promo=$request->tanggal_mulai_promo;
-        $Promo->tanggal_akhir_promo=$request->tanggal_akhir_promo;
-        $Promo->code_promo=$request->code_promo;
-        $Promo->type_promo=$request->type_promo;
-        $Promo->info_promo=$request->info_promo;
+        $promo = new promo;
+        $promo->tanggal_mulai_promo=$request->tanggal_mulai_promo;
+        $promo->tanggal_akhir_promo=$request->tanggal_akhir_promo;
+        $promo->code_promo=$request->code_promo;
+        $promo->type_promo=$request->type_promo;
+        $promo->info_promo=$request->info_promo;
         // Formatting data harga promo
         $harga_promo = str_replace('.', '', $request->harga_promo); // Hilangkan titik sebagai pemisah ribuan
         $harga_promo = str_replace(',', '.', $harga_promo); // Ganti koma dengan titik sebagai pemisah desimal
-        $Promo->harga_promo = $harga_promo; // Simpan harga yang sudah diformat
-        $Promo->users_id=auth()->user()->id;
-        $Promo->save();
+        $promo->harga_promo = $harga_promo; // Simpan harga yang sudah diformat
+        $promo->users_id=auth()->user()->id;
+        $promo->save();
       // Menggunakan session flash untuk menyimpan pesan
-      return redirect('D_Promo')->with('success', 'Data Promo berhasil diinput.');
+      return redirect('d_promo')->with('success', 'Data Promo berhasil diinput.');
     }
 
 
     public function delete_Promo($id)
     {
-        $Promo = Promo::find($id);
+        $promo = promo::find($id);
     
-        if (!$Promo) {
+        if (!$promo) {
             return response()->json(['status' => 'error', 'message' => 'Data jual tidak ditemukan.']);
         }
     
-        if ($Promo->delete()) {
+        if ($promo->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Data jual berhasil dihapus.']);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Gagal menghapus data jual.']);
@@ -99,7 +99,7 @@ class PromoController extends Controller
 
     public function deleteAll_Promo()
     {
-        $deleted = Promo::truncate();
+        $deleted = promo::truncate();
     
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'Semua promo berhasil dihapus.']);
@@ -110,15 +110,15 @@ class PromoController extends Controller
 
     public function edit_Promo($id)
     {
-        $Promo = Promo::find($id);
-        return view('admin.D_EditPromo', compact('Promo'));
+        $promo = promo::find($id);
+        return view('admin.d_editpromo', compact('promo'));
     }
 
     public function update_Promo(Request $request, $id)
     {
 
   // Validasi agar tidak terjadi duplikat
-    $existingPromo = Promo::where(function($query) use ($request) {
+    $existingPromo = promo::where(function($query) use ($request) {
                             $query->where('code_promo', $request->code_promo)
                                   ->orWhere('type_promo', $request->type_promo);
                         })
@@ -136,23 +136,23 @@ class PromoController extends Controller
         }
     }
 
-        $Promo = Promo::find($id);
+        $promo = promo::find($id);
         
         // Update data hasil dengan data baru
-        $Promo ->tanggal_mulai_promo=$request->tanggal_mulai_promo;
-        $Promo ->tanggal_akhir_promo=$request->tanggal_akhir_promo;
-        $Promo ->code_promo=$request->code_promo;
-        $Promo ->type_promo=$request->type_promo;
-        $Promo ->info_promo=$request->info_promo;
+        $promo ->tanggal_mulai_promo=$request->tanggal_mulai_promo;
+        $promo ->tanggal_akhir_promo=$request->tanggal_akhir_promo;
+        $promo ->code_promo=$request->code_promo;
+        $promo ->type_promo=$request->type_promo;
+        $promo ->info_promo=$request->info_promo;
         // Formatting data harga promo
         $harga_promo = str_replace('.', '', $request->harga_promo); // Hilangkan titik sebagai pemisah ribuan
         $harga_promo = str_replace(',', '.', $harga_promo); // Ganti koma dengan titik sebagai pemisah desimal
-        $Promo->harga_promo = $harga_promo; // Simpan harga yang sudah diformat
+        $promo->harga_promo = $harga_promo; // Simpan harga yang sudah diformat
 
         // Simpan perubahan
-        $Promo->save();
+        $promo->save();
 
         // Redirect ke halaman D_Promo setelah update
-        return redirect('D_Promo')->with('success', 'data promo berhasil di update!');
+        return redirect('d_promo')->with('success', 'data promo berhasil di update!');
     }
 }

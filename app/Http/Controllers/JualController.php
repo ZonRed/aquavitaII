@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 
-use App\Models\Jual;
+use App\Models\jual;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -14,41 +14,41 @@ class JualController extends Controller
     public function Jual()
     {
             // Fetch jadwal data from the database
-            $Jual = Jual::paginate(5); // Paginate with 5 items per page
-            return view('admin.D_Jual', ['Jual' => $Jual]);
+            $jual = jual::paginate(5); // Paginate with 5 items per page
+            return view('admin.d_jual', ['jual' => $jual]);
     }
 
     public function pencarianadminjual(Request $request)
     {
         $query = $request->input('caricodejualadmin_jual');
-        $Jual = Jual::where('type_jual', 'like', '%' . $query . '%')->paginate(5);
-        return response()->json($Jual); // Return paginated results as JSON for AJAX handling
+        $jual = jual::where('type_jual', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($jual); // Return paginated results as JSON for AJAX handling
     }
 
     public function pengguna_Jual()
     {
-        $Jual = Jual::paginate(5); // Paginate with 5 items per page
-        return view('pengguna.Jual', ['Jual' => $Jual]);
+        $jual = jual::paginate(5); // Paginate with 5 items per page
+        return view('pengguna.jual', ['jual' => $jual]);
     }
 
     public function pencarianpenggunajual(Request $request)
     {
         $query = $request->input('caricodejualpengguna_jual');
-        $Jual = Jual::where('type_jual', 'like', '%' . $query . '%')->paginate(5);
-        return response()->json($Jual);
+        $jual = jual::where('type_jual', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($jual);
     }
 
 
     public function InputJual()
     {
-        $Jual = Jual::all();
-        return view('admin.D_InputJual',compact('Jual'));
+        $jual = jual::all();
+        return view('admin.d_inputjual',compact('jual'));
     }
 
     public function SaveJual(Request $request) 
     {
     // Validasi agar tidak terjadi duplikat
-    $existingJual = Jual::where(function($query) use ($request) {
+    $existingJual = jual::where(function($query) use ($request) {
                             $query->where('code_jual', $request->code_jual)
                                   ->orWhere('type_jual', $request->type_jual);
                         })
@@ -57,37 +57,37 @@ class JualController extends Controller
 
     if ($existingJual) {
         if ($existingJual->code_jual == $request->code_jual && $existingJual->type_jual == $request->type_jual) {
-            return redirect('D_InputJual')->with('error', 'Code dan Type Barang terjadi duplikat!');
+            return redirect('d_inputjual')->with('error', 'Code dan Type Barang terjadi duplikat!');
         } elseif ($existingJual->code_jual == $request->code_jual) {
-            return redirect('D_InputJual')->with('error', 'Code Barang terjadi duplikat!');
+            return redirect('d_inputjual')->with('error', 'Code Barang terjadi duplikat!');
         } else {
-            return redirect('D_InputJual')->with('error', 'Type Barang terjadi duplikat!');
+            return redirect('d_inputjual')->with('error', 'Type Barang terjadi duplikat!');
         }
     }
 
 
-        $Jual = new Jual;
-        $Jual->tanggal_jual=$request->tanggal_jual;
-        $Jual->code_jual=$request->code_jual;
-        $Jual->type_jual=$request->type_jual;
+        $jual = new jual;
+        $jual->tanggal_jual=$request->tanggal_jual;
+        $jual->code_jual=$request->code_jual;
+        $jual->type_jual=$request->type_jual;
         // Format harga_jual menggunakan number_format
         $harga_jual = str_replace('.', '', $request->harga_jual); // Hilangkan titik sebagai pemisah ribuan
         $harga_jual = str_replace(',', '.', $harga_jual); // Ganti koma dengan titik sebagai pemisah desimal
-        $Jual->harga_jual = $harga_jual;
-        $Jual->stock_jual=$request->stock_jual;
-        $Jual->jumlah_jual=$request->jumlah_jual;
-        $Jual->users_id=auth()->user()->id;
-        $Jual->save();
+        $jual->harga_jual = $harga_jual;
+        $jual->stock_jual=$request->stock_jual;
+        $jual->jumlah_jual=$request->jumlah_jual;
+        $jual->users_id=auth()->user()->id;
+        $jual->save();
 
 
         // Menggunakan session flash untuk menyimpan pesan
-        return redirect('D_Jual')->with('success', 'Data jual berhasil diinput.');
+        return redirect('d_jual')->with('success', 'Data jual berhasil diinput.');
     }
 
 
     public function delete_Jual($id)
     {
-        $jual = Jual::find($id);
+        $jual = jual::find($id);
     
         if (!$jual) {
             return response()->json(['status' => 'error', 'message' => 'Data jual tidak ditemukan.']);
@@ -102,7 +102,7 @@ class JualController extends Controller
     
     public function deleteAll_Jual()
     {
-        $deleted = Jual::truncate();
+        $deleted = jual::truncate();
     
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'Semua jual berhasil dihapus.']);
@@ -114,14 +114,14 @@ class JualController extends Controller
 
     public function edit_Jual($id)
     {
-        $Jual = Jual::find($id);
-        return view('admin.D_EditJual', compact('Jual'));
+        $jual = jual::find($id);
+        return view('admin.d_editjual', compact('jual'));
     }
 
     public function update_Jual(Request $request, $id)
     {
     // Validasi agar tidak terjadi duplikat
-    $existingJual = Jual::where(function($query) use ($request) {
+    $existingJual = jual::where(function($query) use ($request) {
                             $query->where('code_jual', $request->code_jual)
                                   ->orWhere('type_jual', $request->type_jual);
                         })
@@ -139,24 +139,24 @@ class JualController extends Controller
         }
     }
 
-        $Jual = Jual::find($id);
+        $jual = Jual::find($id);
         
         // Update data hasil dengan data baru
-        $Jual ->tanggal_jual=$request->tanggal_jual;
-        $Jual ->code_jual=$request->code_jual;
-        $Jual ->type_jual=$request->type_jual;
+        $jual ->tanggal_jual=$request->tanggal_jual;
+        $jual ->code_jual=$request->code_jual;
+        $jual ->type_jual=$request->type_jual;
         // Format harga_jual menggunakan number_format
         $harga_jual = str_replace('.', '', $request->harga_jual); // Hilangkan titik sebagai pemisah ribuan
         $harga_jual = str_replace(',', '.', $harga_jual); // Ganti koma dengan titik sebagai pemisah desimal
-        $Jual->harga_jual = $harga_jual;
-        $Jual ->stock_jual=$request->stock_jual;
-        $Jual ->jumlah_jual=$request->jumlah_jual;
+        $jual->harga_jual = $harga_jual;
+        $jual->stock_jual=$request->stock_jual;
+        $jual->jumlah_jual=$request->jumlah_jual;
 
 
         // Simpan perubahan
-        $Jual->save();
+        $jual->save();
 
         // Redirect ke halaman D_Jual setelah update
-        return redirect('D_Jual')->with('success', 'data jual berhasil di update!');
+        return redirect('d_jual')->with('success', 'data jual berhasil di update!');
     }
 }

@@ -75,16 +75,16 @@
                 <a class="nav-link" href="dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Laporan">View Pesan</a>
+                <a class="nav-link" href="d_laporan">View Pesan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Jadwal">Isi Penjadwalan</a>
+                <a class="nav-link" href="d_jadwal">Isi Penjadwalan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Jual">Isi Penjualan</a>
+                <a class="nav-link" href="d_jual">Isi Penjualan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Promo">Isi Promo</a>
+                <a class="nav-link" href="d_promo">Isi Promo</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/') }}">Home Web</a>
@@ -119,7 +119,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <a href="D_InputPromo" class="btn btn-outline-primary">Input Data Promo</a>
+                <a href="d_inputpromo" class="btn btn-outline-primary">Input Data Promo</a>
             </div>
         </div>
     </div>
@@ -298,78 +298,80 @@
                         // Update table body
                         $('#myTable').html(tableRows);
 
-                      // Pagination Links
-                    let paginationLinks = '';
+                        // Pagination Links
+                        let paginationLinks = '';
 
-                    // First Page link
-                    paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
+                        // First Page link
+                        paginationLinks += `<li class="page-item ${data.current_page === 1 ? 'disabled' : ''}">
                         <a class="page-link" href="#" data-page="1" aria-label="First">
                             <span aria-hidden="true">&laquo;&laquo;</span>
                         </a>
                     </li>`;
 
-                    // Previous Page link
-                    if (data.current_page > 1) {
-                        paginationLinks += `<li class="page-item">
+                        // Previous Page link
+                        if (data.current_page > 1) {
+                            paginationLinks += `<li class="page-item">
                             <a class="page-link" href="#" data-page="${data.current_page - 1}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>`;
-                    } else {
-                        paginationLinks += `<li class="page-item disabled">
+                        } else {
+                            paginationLinks += `<li class="page-item disabled">
                             <span class="page-link">&laquo;</span>
                         </li>`;
-                    }
+                        }
 
-                    // Page numbers
-                    let startPage = Math.max(data.current_page - 2, 1);
-                    let endPage = Math.min(data.current_page + 2, data.last_page);
+                        // Page numbers
+                        let startPage = Math.max(data.current_page - 2, 1);
+                        let endPage = Math.min(data.current_page + 2, data.last_page);
 
-                    if (startPage > 1) {
-                        paginationLinks += `<li class="page-item">
+                        if (startPage > 1) {
+                            paginationLinks += `<li class="page-item">
                             <a class="page-link" href="#" data-page="1">1</a>
                         </li>`;
-                        if (startPage > 2) {
-                            paginationLinks += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                            if (startPage > 2) {
+                                paginationLinks +=
+                                    `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                            }
                         }
-                    }
 
-                    for (let i = startPage; i <= endPage; i++) {
-                        paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
+                        for (let i = startPage; i <= endPage; i++) {
+                            paginationLinks += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
                             <a class="page-link" href="#" data-page="${i}">${i}</a>
                         </li>`;
-                    }
-
-                    if (endPage < data.last_page) {
-                        if (endPage < data.last_page - 1) {
-                            paginationLinks += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
                         }
-                        paginationLinks += `<li class="page-item">
+
+                        if (endPage < data.last_page) {
+                            if (endPage < data.last_page - 1) {
+                                paginationLinks +=
+                                    `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                            }
+                            paginationLinks += `<li class="page-item">
                             <a class="page-link" href="#" data-page="${data.last_page}">${data.last_page}</a>
                         </li>`;
-                    }
+                        }
 
-                    // Next Page link
-                    if (data.current_page < data.last_page) {
-                        paginationLinks += `<li class="page-item">
+                        // Next Page link
+                        if (data.current_page < data.last_page) {
+                            paginationLinks += `<li class="page-item">
                             <a class="page-link" href="#" data-page="${data.current_page + 1}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>`;
-                    } else {
-                        paginationLinks += `<li class="page-item disabled">
+                        } else {
+                            paginationLinks += `<li class="page-item disabled">
                             <span class="page-link">&raquo;</span>
                         </li>`;
-                    }
+                        }
 
-                    // Last Page link
-                    paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
+                        // Last Page link
+                        paginationLinks += `<li class="page-item ${data.current_page === data.last_page ? 'disabled' : ''}">
                         <a class="page-link" href="#" data-page="${data.last_page}" aria-label="Last">
                             <span aria-hidden="true">&raquo;&raquo;</span>
                         </a>
                     </li>`;
 
-                    $('#paginationLinks').html(paginationLinks);
+                        $('#paginationLinks').html(paginationLinks);
                     }
                 });
             }

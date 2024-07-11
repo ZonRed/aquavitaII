@@ -87,23 +87,23 @@
 </head>
 
 <body>
-     <!-- Sidebar -->
-     <div class="sidebar">
+    <!-- Sidebar -->
+    <div class="sidebar">
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link" href="dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Laporan">View Pesan</a>
+                <a class="nav-link" href="d_laporan">View Pesan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Jadwal">Isi Penjadwalan</a>
+                <a class="nav-link" href="d_jadwal">Isi Penjadwalan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Jual">Isi Penjualan</a>
+                <a class="nav-link" href="d_jual">Isi Penjualan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Promo">Isi Promo</a>
+                <a class="nav-link" href="d_promo">Isi Promo</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/') }}">Home Web</a>
@@ -143,14 +143,14 @@
             </div>
             <div class="col-md-6">
                 <!-- Input button -->
-                <a href="D_InputJual" class="btn btn-outline-primary">Input Data Jual</a>
+                <a href="d_inputjual" class="btn btn-outline-primary">Input Data Jual</a>
             </div>
         </div>
     </div>
 
     <!-- Table untuk CRUD isi penjualan -->
     <div class="table-responsive content-area">
-       <div class="d-flex justify-content-between mb-2 flex-column flex-md-row">
+        <div class="d-flex justify-content-between mb-2 flex-column flex-md-row">
             <div> </div>
             <div>
                 <button class="btn btn-danger" onclick="showConfirmDeleteAllModal()">Delete All</button>
@@ -327,7 +327,7 @@
                         // Update table body
                         $('#myTable').html(tableRows);
 
-                       // Pagination Links
+                        // Pagination Links
                         let paginationLinks = '';
 
                         // First Page link
@@ -359,7 +359,8 @@
                                 <a class="page-link" href="#" data-page="1">1</a>
                             </li>`;
                             if (startPage > 2) {
-                                paginationLinks += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                                paginationLinks +=
+                                    `<li class="page-item disabled"><span class="page-link">...</span></li>`;
                             }
                         }
 
@@ -371,7 +372,8 @@
 
                         if (endPage < data.last_page) {
                             if (endPage < data.last_page - 1) {
-                                paginationLinks += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                                paginationLinks +=
+                                    `<li class="page-item disabled"><span class="page-link">...</span></li>`;
                             }
                             paginationLinks += `<li class="page-item">
                                 <a class="page-link" href="#" data-page="${data.last_page}">${data.last_page}</a>

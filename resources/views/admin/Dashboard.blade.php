@@ -76,16 +76,16 @@
                 <a class="nav-link" href="dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Laporan">View Pesan</a>
+                <a class="nav-link" href="d_laporan">View Pesan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Jadwal">Isi Penjadwalan</a>
+                <a class="nav-link" href="d_jadwal">Isi Penjadwalan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Jual">Isi Penjualan</a>
+                <a class="nav-link" href="d_jual">Isi Penjualan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="D_Promo">Isi Promo</a>
+                <a class="nav-link" href="d_promo">Isi Promo</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/') }}">Home Web</a>
@@ -99,8 +99,8 @@
             <h2>Welcome to Admin Dashboard</h2>
             <p>Ini adalah halaman admin dashboard.</p>
         </div>
-         <!-- user admin tampilan -->
-         <div class="position-fixed" style="top: 10px; right: 10px; z-index: 100;">
+        <!-- user admin tampilan -->
+        <div class="position-fixed" style="top: 10px; right: 10px; z-index: 100;">
             <span style="color: #000; font-weight: bold;">{{ Auth::user()->nama ?? '' }}</span>
             <a href="/logout" style="color: #dc3545; margin-left: 10px; text-decoration: none;">Logout</a>
         </div>

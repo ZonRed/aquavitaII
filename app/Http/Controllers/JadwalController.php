@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 
-use App\Models\Jadwal;
+use App\Models\jadwal;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -14,57 +14,57 @@ class JadwalController extends Controller
     public function Jadwal()
     {
         // Fetch jadwal data from the database
-        $Jadwal = Jadwal::paginate(5); // Paginate with 5 items per page
-        return view('admin.D_Jadwal', ['Jadwal' => $Jadwal]);
+        $jadwal = jadwal::paginate(5); // Paginate with 5 items per page
+        return view('admin.d_jadwal', ['jadwal' => $jadwal]);
     }
     public function pencarianadminjadwal(Request $request)
     {
         $query = $request->input('carihariadmin_jadwal');
-        $Jadwal = Jadwal::where('hari_jadwal', 'like', '%' . $query . '%')->paginate(5);
-        return response()->json($Jadwal); // Return paginated results as JSON for AJAX handling
+        $jadwal = jadwal::where('hari_jadwal', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($jadwal); // Return paginated results as JSON for AJAX handling
     }
     
     public function pengguna_Jadwal()
     {
-        $Jadwal = Jadwal::paginate(5); // Paginate with 5 items per page
-        return view('pengguna.Jadwal', ['Jadwal' => $Jadwal]);
+        $jadwal = jadwal::paginate(5); // Paginate with 5 items per page
+        return view('pengguna.jadwal', ['jadwal' => $jadwal]);
     }
     
 
     public function pencarianpenggunajadwal(Request $request)
     {
         $query = $request->input('cariharipengguna_jadwal');
-        $Jadwal = Jadwal::where('hari_jadwal', 'like', '%' . $query . '%')->paginate(5);
-        return response()->json($Jadwal);
+        $jadwal= jadwal::where('hari_jadwal', 'like', '%' . $query . '%')->paginate(5);
+        return response()->json($jadwal);
     }
 
 
     public function InputJadwal()
     {
-        $Jadwal = Jadwal::all();
-        return view('admin.D_InputJadwal',compact('Jadwal'));
+        $jadwal = jadwal::all();
+        return view('admin.d_inputjadwal',compact('jadwal'));
     }
 
     public function SaveJadwal(Request $request) 
     {
         // Validasi agar tidak terjadi duplikat
-        $existingJadwal = Jadwal::where('hari_jadwal', $request->hari_jadwal)
+        $existingJadwal = jadwal::where('hari_jadwal', $request->hari_jadwal)
                                 ->where('users_id', auth()->user()->id)
                                 ->first();
     
         if ($existingJadwal) {
-            return redirect('D_InputJadwal')->with('error', 'Data hari terjadi duplikat!.');
+            return redirect('d_inputjadwal')->with('error', 'Data hari terjadi duplikat!.');
         }
     
         // Jika tidak ada duplikat, simpan data baru
-        $Jadwal = new Jadwal;
-        $Jadwal->hari_jadwal = $request->hari_jadwal;
-        $Jadwal->buka_jadwal = $request->buka_jadwal;
-        $Jadwal->tutup_jadwal = $request->tutup_jadwal;
-        $Jadwal->users_id = auth()->user()->id;
-        $Jadwal->save();
+        $jadwal = new jadwal;
+        $jadwal->hari_jadwal = $request->hari_jadwal;
+        $jadwal->buka_jadwal = $request->buka_jadwal;
+        $jadwal->tutup_jadwal = $request->tutup_jadwal;
+        $jadwal->users_id = auth()->user()->id;
+        $jadwal->save();
     
-        return redirect('D_Jadwal')->with('success', 'Data jadwal berhasil diinput.');
+        return redirect('d_jadwal')->with('success', 'Data jadwal berhasil diinput.');
     }
     
     
@@ -73,7 +73,7 @@ class JadwalController extends Controller
     // Method untuk menghapus satu jadwal
     public function delete_Jadwal($id)
     {
-        $jadwal = Jadwal::find($id);
+        $jadwal = jadwal::find($id);
     
         if (!$jadwal) {
             return response()->json(['status' => 'error', 'message' => 'Data jadwal tidak ditemukan.']);
@@ -90,7 +90,7 @@ class JadwalController extends Controller
     // Method untuk menghapus semua jadwal
     public function deleteAll_Jadwal()
     {
-        $deleted = Jadwal::truncate();
+        $deleted = jadwal::truncate();
     
         if ($deleted) {
             return response()->json(['status' => 'success', 'message' => 'Semua jadwal berhasil dihapus.']);
@@ -104,14 +104,14 @@ class JadwalController extends Controller
 
     public function edit_Jadwal($id)
     {
-        $Jadwal = Jadwal::find($id);
-        return view('admin.D_EditJadwal', compact('Jadwal'));
+        $jadwal = jadwal::find($id);
+        return view('admin.d_editjadwal', compact('jadwal'));
     }
 
     public function update_jadwal(Request $request, $id)
     {
     // Validasi agar tidak terjadi duplikat
-    $existingJadwal = Jadwal::where(function($query) use ($request) {
+    $existingJadwal = jadwal::where(function($query) use ($request) {
                             $query->where('hari_jadwal', $request->hari_jadwal);
                         })
                         ->where('id', '!=', $id) // Pastikan id tidak sama dengan id yang sedang diupdate
@@ -121,13 +121,13 @@ class JadwalController extends Controller
         return redirect()->back()->with('error', 'Hari terjadi duplikat!');
     }
 
-    $Jadwal = Jadwal::find($id);
-    $Jadwal->hari_jadwal = $request->hari_jadwal;
-    $Jadwal->buka_jadwal = $request->buka_jadwal;
-    $Jadwal->tutup_jadwal = $request->tutup_jadwal;
-    $Jadwal->save();
+    $jadwal = Jadwal::find($id);
+    $jadwal->hari_jadwal = $request->hari_jadwal;
+    $jadwal->buka_jadwal = $request->buka_jadwal;
+    $jadwal->tutup_jadwal = $request->tutup_jadwal;
+    $jadwal->save();
 
-    return redirect('D_Jadwal')->with('success', 'Jadwal berhasil di update!');
+    return redirect('d_jadwal')->with('success', 'Jadwal berhasil di update!');
     }
 
 
