@@ -35,7 +35,7 @@ class LaporanController extends Controller
     
     public function InputLaporan()
     {
-        $laporan = Laporan::all();
+        $laporan = laporan::all();
         return view('pengguna.index', compact('laporan'));
     }
 
