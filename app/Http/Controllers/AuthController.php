@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function register()
     {
-        return view('admin.register');
+        return view('auth.register');
     }
 
     public function simpanuser(Request $request)
@@ -43,7 +43,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        return view('admin.login');
+        return view('auth.login');
     }
 
     public function checklogin(Request $request)

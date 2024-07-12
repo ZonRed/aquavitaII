@@ -23,8 +23,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 //route Kontak
-Route::get('/Kontak', function () {
-    return view('pengguna.Kontak');
+Route::get('/kontak', function () {
+    return view('pengguna.kontak');
 });
 
 //route register
